@@ -1,0 +1,68 @@
+<form [formGroup]="form" (ngSubmit)="handleRegister()">
+  <h3 class="mt-2 mb-4">Sign In</h3>
+
+  <div class="form-outline mb-4">
+    <label class="form-label" for="firstName">First Name</label>
+    <input
+      type="name"
+      id="firstName"
+      class="form-control form-control-lg"
+      formControlName="firstName"
+    />
+  </div>
+
+  <div class="form-outline mb-4">
+    <label class="form-label" for="lastName">Last Name</label>
+    <input
+      type="name"
+      id="lastName"
+      class="form-control form-control-lg"
+      formControlName="lastName"
+    />
+  </div>
+
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form3Example3">Email address</label>
+    <input
+      type="email"
+      id="form3Example3"
+      class="form-control form-control-lg"
+      placeholder="Enter a valid email address"
+      formControlName="email"
+    />
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-3">
+    <label class="form-label" for="form3Example4">Password</label>
+    <input
+      type="password"
+      id="form3Example4"
+      class="form-control form-control-lg"
+      placeholder="Enter password"
+      formControlName="password"
+    />
+  </div>
+
+  <div class="form-outline mb-4">
+    <label class="form-label" for="lastName">Phone</label>
+    <input
+      type="name"
+      id="phone"
+      class="form-control form-control-lg"
+      formControlName="phone"
+    />
+  </div>
+
+  <a href="#!" class="text-body">Forgot password?</a>
+
+  <div class="text-center text-lg-start mt-4 pt-2">
+    <button type="submit" class="btn btn-primary btn-lg px-4 py-2">
+      Login
+    </button>
+    <p class="small fw-bold mt-2 pt-1 mb-0">
+      Don't have an account?
+      <a routerLink="/register" class="link-primary">Register</a>
+    </p>
+  </div>
+</form>

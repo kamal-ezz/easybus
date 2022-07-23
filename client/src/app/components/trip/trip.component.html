@@ -1,0 +1,12 @@
+<h3>{{ trip.busName }}</h3>
+<div>{{ trip.departureCity }}</div>
+<div>{{ trip.arrivalCity }}</div>
+<div>{{ trip.date }}</div>
+<div>{{ trip.departureTime }}</div>
+<div>{{ trip.arrivalTime }}</div>
+<div>{{ trip.duration }}</div>
+<div>{{ trip.price }}</div>
+<div *ngIf="showSeats">
+    <div *ngFor="let seat of trip.availableSeats">{{ seat.number }}</div>
+</div>
+<button (click)="toggleSeats()">Show available seats</button>
