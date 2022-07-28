@@ -1,1 +1,115 @@
-<p>home works!</p>
+<div class="container parentcontainer">
+  <div class="row justify-content-center">
+    <div class="col d-none d-lg-block">
+      <img
+        class="img img-fluid"
+        src="assets/planjourney.svg"
+        alt="Trip Image"
+      />
+    </div>
+    <div class="col col-lg-6 col-md-10 col-sm-12">
+      <div class="card">
+        <h5 class="card-header">Plan Trip</h5>
+        <div class="card-body">
+          <form [formGroup]="tripInfo" (ngSubmit)="onSubmit()">
+            <div
+              *ngIf="submitted && formControl['destination'].errors"
+              class="alert alert-danger"
+            >
+              Source and destination can not be same.
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="departureCity">Leaving From</label>
+                <select
+                  class="form-control"
+                  id="departureCity"
+                  name="departureCity"
+                  formControlName="departureCity"
+                >
+                  <option *ngFor="let city of sourceCities" [value]="city">
+                    {{ city }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    formControl['departureCity'].invalid &&
+                    (formControl['departureCity'].dirty ||
+                      formControl['departureCity'].touched ||
+                      submitted)
+                  "
+                  class="text-danger"
+                >
+                  <small *ngIf="formControl['departureCity'].errors"
+                    >Source Location is required</small
+                  >
+                </div>
+              </div>
+
+              <div class="form-group col">
+                <label for="destinationCity">Going To</label>
+                <select
+                  class="form-control"
+                  id="destinationCity"
+                  name="destinationCity"
+                  formControlName="destinationCity"
+                >
+                  <option *ngFor="let city of destinationCities" [value]="city">
+                    {{ city }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    formControl['destinationCity'].invalid &&
+                    (formControl['destinationCity'].dirty ||
+                      formControl['destinationCity'].touched ||
+                      submitted)
+                  "
+                  class="text-danger"
+                >
+                  <small *ngIf="formControl['destinationCity'].errors"
+                    >Destination Location is required</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="form-row justify-content-center">
+              <div class="form-group col-8">
+                <label for="depatureDate">Departure Date</label>
+                <input
+                  class="form-control"
+                  id="departureDate"
+                  name="departureDate"
+                  type="date"
+                  formControlName="departureDate"
+                />
+                <div
+                  *ngIf="
+                    formControl['departureDate'].invalid &&
+                    (formControl['departureDate'].dirty ||
+                      formControl['departureDate'].touched ||
+                      submitted)
+                  "
+                  class="text-danger"
+                >
+                  <small *ngIf="formControl['departureDate'].errors"
+                    >Journey date is required</small
+                  >
+                  <small *ngIf="formControl['departureDate'].errors"
+                    >Journey date is Invalid.(Do not enter old date)</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+              <button type="submit" class="btn btn-primary">
+                Search Buses
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
