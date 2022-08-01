@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
   }
 
   handleRegister() {
-    const val = this.form.value;
+    /*const val = this.form.value;
 
     if (val.any) {
       this.authService
@@ -43,6 +43,6 @@ export class RegisterComponent implements OnInit {
           if (data.token) localStorage.setItem('token', data.token);
           this.router.navigateByUrl('/');
         });
-    }
+    }**/
   }
 }

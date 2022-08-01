@@ -1,11 +1,19 @@
-export type Trip = {
-    id: number,
-    busName: string,
-    departureCity: string,
-    arrivalCity: string,
-    date: string,
-    departureTime: string,
-    arrivalTime: string,
-    duration: string,
-    price: string 
+export interface Trip {
+  id: number;
+  bus: Bus;
+  departureCity: string;
+  destinationCity: string;
+  date: string;
+  departureTime: string;
+  destinationTime: string;
+  duration?: string;
+  price: string;
+  availableSeats: number[];
+}
+
+interface Bus {
+  id: number;
+  company: string;
+  logo: string;
+  equipments: string[];
 }

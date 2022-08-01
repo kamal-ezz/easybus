@@ -1,5 +1,6 @@
-<div class="container parentcontainer">
+<div class="container mt-5">
   <div class="row justify-content-center">
+    <h2 class="text-center mb-5">Buy your bus tickets at the best price!</h2>
     <div class="col d-none d-lg-block">
       <img
         class="img img-fluid"
@@ -10,10 +11,10 @@
     <div class="col col-lg-6 col-md-10 col-sm-12">
       <div class="card">
         <h5 class="card-header">Plan Trip</h5>
-        <div class="card-body">
+        <div class="card-body p-4">
           <form [formGroup]="tripInfo" (ngSubmit)="onSubmit()">
             <div
-              *ngIf="submitted && formControl['destination'].errors"
+              *ngIf="submitted && destination?.errors"
               class="alert alert-danger"
             >
               Source and destination can not be same.
@@ -21,39 +22,37 @@
 
             <div class="form-row">
               <div class="form-group col">
-                <label for="departureCity">Leaving From</label>
+                <label for="departure">Leaving From</label>
                 <select
                   class="form-control"
-                  id="departureCity"
-                  name="departureCity"
-                  formControlName="departureCity"
+                  id="departure"
+                  name="departure"
+                  formControlName="departure"
                 >
-                  <option *ngFor="let city of sourceCities" [value]="city">
+                  <option *ngFor="let city of departureCities" [value]="city">
                     {{ city }}
                   </option>
                 </select>
                 <div
                   *ngIf="
-                    formControl['departureCity'].invalid &&
-                    (formControl['departureCity'].dirty ||
-                      formControl['departureCity'].touched ||
-                      submitted)
+                    departure?.invalid &&
+                    (departure?.dirty || departure?.touched || submitted)
                   "
                   class="text-danger"
                 >
-                  <small *ngIf="formControl['departureCity'].errors"
+                  <small *ngIf="departure?.errors"
                     >Source Location is required</small
                   >
                 </div>
               </div>
 
               <div class="form-group col">
-                <label for="destinationCity">Going To</label>
+                <label for="destination">Going To</label>
                 <select
                   class="form-control"
-                  id="destinationCity"
-                  name="destinationCity"
-                  formControlName="destinationCity"
+                  id="destination"
+                  name="destination"
+                  formControlName="destination"
                 >
                   <option *ngFor="let city of destinationCities" [value]="city">
                     {{ city }}
@@ -61,14 +60,12 @@
                 </select>
                 <div
                   *ngIf="
-                    formControl['destinationCity'].invalid &&
-                    (formControl['destinationCity'].dirty ||
-                      formControl['destinationCity'].touched ||
-                      submitted)
+                    destination?.invalid &&
+                    (destination?.dirty || destination?.touched || submitted)
                   "
                   class="text-danger"
                 >
-                  <small *ngIf="formControl['destinationCity'].errors"
+                  <small *ngIf="destination?.errors"
                     >Destination Location is required</small
                   >
                 </div>
@@ -76,33 +73,28 @@
             </div>
             <div class="form-row justify-content-center">
               <div class="form-group col-8">
-                <label for="depatureDate">Departure Date</label>
+                <label for="date">Departure Date</label>
                 <input
                   class="form-control"
-                  id="departureDate"
-                  name="departureDate"
+                  id="date"
+                  name="date"
                   type="date"
-                  formControlName="departureDate"
+                  formControlName="date"
                 />
                 <div
                   *ngIf="
-                    formControl['departureDate'].invalid &&
-                    (formControl['departureDate'].dirty ||
-                      formControl['departureDate'].touched ||
-                      submitted)
+                    date?.invalid && (date?.dirty || date?.touched || submitted)
                   "
                   class="text-danger"
                 >
-                  <small *ngIf="formControl['departureDate'].errors"
-                    >Journey date is required</small
-                  >
-                  <small *ngIf="formControl['departureDate'].errors"
+                  <small *ngIf="date?.errors">Journey date is required</small>
+                  <small *ngIf="date?.errors"
                     >Journey date is Invalid.(Do not enter old date)</small
                   >
                 </div>
               </div>
             </div>
-            <div class="row justify-content-center mt-3">
+            <div class="row justify-content-center mt-4">
               <button type="submit" class="btn btn-primary">
                 Search Buses
               </button>

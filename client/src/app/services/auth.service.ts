@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 
@@ -12,10 +12,13 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
+  private token!: string | null;
+  //private loggedInUsername!: string | null;
+
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<User> {
-    return this.http.post<any>(
+  login(email: string, password: string) {
+    return this.http.post(
       environment.url + '/api/v1/auth/login',
       {
         email,
@@ -25,29 +28,40 @@ export class AuthService {
     );
   }
 
-  register(
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    phone: string
-  ): Observable<any> {
+  register(user: User) {
     return this.http.post(
-      environment.url + '/auth/signup',
-      {
-        firstName,
-        lastName,
-        email,
-        password,
-        phone,
-      },
+      environment.url + '/api/v1/auth/signup',
+      user,
       httpOptions
     );
   }
 
-  logout() {}
+  logout() {
+    this.token = null;
+    //this.loggedInUsername = null;
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('users');
+  }
 
-  isLoggedIn() {}
+  saveToken(token: string) {
+    this.token = token;
+    localStorage.setItem('token', token);
+  }
 
-  isLoggedOut() {}
+  addUserToLocalCache(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  getUserFromLocalCache() {
+    return JSON.parse(localStorage.getItem('user') || '');
+  }
+
+  loadToken() {
+    this.token = localStorage.getItem('token');
+  }
+
+  getToken() {
+    return this.token;
+  }
 }

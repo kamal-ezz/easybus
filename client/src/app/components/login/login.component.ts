@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -25,21 +26,33 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  handleLogin() {
-    const val = this.form.value;
-
-    if (val.email && val.password) {
-      this.authService.login(val.email, val.password).subscribe(
-        (data) => {
-          if (data.token) localStorage.setItem('token', data.token);
-          this.router.navigateByUrl('/');
-        },
-        (err) => this.errors.push(err.error.error)
-      );
-    }
+  get email() {
+    return this.form.get('email');
   }
 
-  reloadPage(): void {
+  get password() {
+    return this.form.get('password');
+  }
+
+  handleLogin() {
+    this.authService.login(this.email?.value, this.password?.value).subscribe({
+      next: (data) => {
+        const user = data as User;
+        this.authService.saveToken(user.token || '');
+        this.authService.addUserToLocalCache(user);
+        this.router.navigateByUrl('/');
+      },
+      error: (err) => {
+        this.form.setErrors({
+          invalidLogin: true,
+        });
+
+        //this.errors.push(err.error.error);
+      },
+    });
+  }
+
+  reloadPage() {
     window.location.reload();
   }
 }

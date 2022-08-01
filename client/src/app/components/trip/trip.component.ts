@@ -1,26 +1,24 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Trip } from 'src/app/models/trip.model';
 
 @Component({
   selector: 'app-trip',
   templateUrl: './trip.component.html',
-  styleUrls: ['./trip.component.css']
+  styleUrls: ['./trip.component.css'],
 })
 export class TripComponent implements OnInit {
-
   @Input()
-  trip: any
+  trip!: Trip;
 
-  showSeats = true 
+  showSeats = true;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    console.log(this.trip.bus.company);
   }
 
-  toggleSeats(){
+  toggleSeats() {
     this.showSeats = !this.showSeats;
   }
-
-
-
 }

@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class TripService {
   constructor(private http: HttpClient) {}
 
-  getTrips(): Observable<Trip> {
-    return this.http.get<Trip>(`${environment.url}/api/v1/trips`);
+  getTrips(): Observable<Trip[]> {
+    return this.http.get<Trip[]>(`${environment.url}/api/v1/trips`);
   }
 }

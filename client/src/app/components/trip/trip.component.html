@@ -1,12 +1,41 @@
-<h3>{{ trip.busName }}</h3>
-<div>{{ trip.departureCity }}</div>
-<div>{{ trip.arrivalCity }}</div>
-<div>{{ trip.date }}</div>
-<div>{{ trip.departureTime }}</div>
-<div>{{ trip.arrivalTime }}</div>
-<div>{{ trip.duration }}</div>
-<div>{{ trip.price }}</div>
-<div *ngIf="showSeats">
-    <div *ngFor="let seat of trip.availableSeats">{{ seat.number }}</div>
+<div class="row trip p-3">
+  <div class="col-lg-3 d-flex align-items-center">
+    <img src="assets/globus.jpg" alt="logo" height="150" width="200" />
+  </div>
+  <div class="col-lg-6 d-flex flex-column align-items-center">
+    <h5>{{ trip.bus.company }}</h5>
+    <div class="d-flex align-items-center">
+      <div class="me-3">
+        <h3>{{ trip.departureTime.substring(0, 5) }}</h3>
+        <span class="small-text">{{ trip.departureCity }}</span>
+      </div>
+      <div class="divider"></div>
+      <div class="mx-3">
+        <i class="bi bi-clock"></i>
+        <span class="small-text ps-1">{{ trip.duration }}</span>
+      </div>
+      <div class="divider"></div>
+      <div class="ms-3">
+        <span class="medium-text d-block">{{
+          trip.destinationTime.substring(0, 5)
+        }}</span>
+        <span class="small-text">{{ trip.destinationCity }}</span>
+      </div>
+    </div>
+    <div class="mt-3">
+      Equipments :
+      <ng-container *ngFor="let equip of trip.bus.equipments">
+        <img
+          class="mx-1"
+          [src]="'assets/equips/' + equip.toLowerCase() + '.png'"
+        />
+      </ng-container>
+    </div>
+  </div>
+  <div
+    class="col-lg-3 d-flex flex-column align-items-center justify-content-center"
+  >
+    <h3 class="text-primary">{{ trip.price }} DH</h3>
+    <button class="btn btn-primary">Choose a seat</button>
+  </div>
 </div>
-<button (click)="toggleSeats()">Show available seats</button>

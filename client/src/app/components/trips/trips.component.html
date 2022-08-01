@@ -1,5 +1,5 @@
-<div *ngFor="let trip of trips">
+<div class="mt-5 d-flex flex-column align-items-center">
+  <ng-container *ngFor="let trip of trips">
     <app-trip [trip]="trip"></app-trip>
+  </ng-container>
 </div>
-
-<!-- {{ trip.busName }} -->

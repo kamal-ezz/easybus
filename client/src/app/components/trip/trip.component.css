@@ -1,0 +1,19 @@
+.trip {
+  width: 900px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.medium-text {
+  font-size: x-large;
+}
+
+.small-text {
+  font-size: medium;
+  color: gray;
+}
+
+.divider {
+  height: 1px;
+  width: 50px;
+  background-color: black;
+}
