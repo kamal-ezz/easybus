@@ -39,6 +39,8 @@ export class HomeComponent implements OnInit {
     this.submitted = true;
     console.log(this.tripInfo.value);
     if (this.tripInfo.invalid) return;
-    this.router.navigate(['trips']);
+    this.router.navigateByUrl(
+      `trips?departureCity=${this.departure?.value}&destinationCity=${this.destination?.value}&date=${this.date?.value}`
+    );
   }
 }

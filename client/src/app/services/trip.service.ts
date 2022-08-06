@@ -11,6 +11,16 @@ export class TripService {
   constructor(private http: HttpClient) {}
 
   getTrips(): Observable<Trip[]> {
-    return this.http.get<Trip[]>(`${environment.url}/api/v1/trips`);
+    return this.http.get<Trip[]>(`${environment.apiUrl}/api/v1/trips`);
+  }
+
+  searchTrips(departure: string, destination: string, date: string) {
+    return this.http.get<Trip[]>(
+      `${environment.apiUrl}/api/v1/trips/search?departureCity=${departure}&destinationCity=${destination}&date=${date}`
+    );
+  }
+
+  getTripById(id: number): Observable<Trip> {
+    return this.http.get<Trip>(`${environment.apiUrl}/api/v1/trips/${id}`);
   }
 }

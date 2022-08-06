@@ -1,5 +1,6 @@
 package com.kamal.easybus.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +63,7 @@ public class TripService {
 
 	public Page<Trip> searchTrips(String departureCity,
 			String arrivalCity,
-		    String date,
+		    Date date,
 		    Pageable pageable){
 		return tripRepo.findByDepartureCityAndDestinationCityAndDate(departureCity,arrivalCity, date, pageable);
 	}

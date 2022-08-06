@@ -87,6 +87,6 @@ public class AuthController {
                 .orElseThrow(() -> new AppException("User Role not set."));
         user.setRoles(Collections.singleton(userRole));
         User result = userRepo.save(user);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(result);
     }
 }

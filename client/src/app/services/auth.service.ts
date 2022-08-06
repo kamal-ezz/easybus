@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
+import { environment } from 'src/environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -19,7 +20,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http.post(
-      environment.url + '/api/v1/auth/login',
+      environment.apiUrl + '/api/v1/auth/login',
       {
         email,
         password,
@@ -28,10 +29,22 @@ export class AuthService {
     );
   }
 
-  register(user: User) {
+  register(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    phone: string
+  ) {
     return this.http.post(
-      environment.url + '/api/v1/auth/signup',
-      user,
+      environment.apiUrl + '/api/v1/auth/register',
+      {
+        firstName,
+        lastName,
+        email,
+        password,
+        phone,
+      },
       httpOptions
     );
   }
@@ -54,14 +67,24 @@ export class AuthService {
   }
 
   getUserFromLocalCache() {
-    return JSON.parse(localStorage.getItem('user') || '');
+    const user = localStorage.getItem('user');
+    if (user) return JSON.parse(user);
   }
 
-  loadToken() {
+  /*loadToken() {
     this.token = localStorage.getItem('token');
   }
 
   getToken() {
     return this.token;
+  }*/
+
+  isLoggedIn() {
+    const helper = new JwtHelperService();
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    const isExpired = helper.isTokenExpired(token);
+    if (!isExpired) return true;
+    return false;
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Trip } from 'src/app/models/trip.model';
 import { TripService } from 'src/app/services/trip.service';
 
@@ -10,22 +11,32 @@ import { TripService } from 'src/app/services/trip.service';
 export class TripsComponent implements OnInit {
   trips: Trip[] = [];
 
-  constructor(private tripService: TripService) {}
+  constructor(
+    private tripService: TripService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.tripService.getTrips().subscribe({
-      next: (data) => {
-        this.trips = data;
-        console.log(this.trips);
-        this.trips.map(
-          (trip) =>
-            (trip.duration = this.calculateDuration(
-              trip.departureTime,
-              trip.destinationTime
-            ))
-        );
-      },
-    });
+    const departure = this.route.snapshot.queryParamMap.get('departureCity');
+    const destination =
+      this.route.snapshot.queryParamMap.get('destinationCity');
+    const date = this.route.snapshot.queryParamMap.get('date');
+
+    if (departure && destination && date) {
+      this.tripService.searchTrips(departure, destination, date).subscribe({
+        next: (data) => {
+          this.trips = (data as any).content;
+          console.log(this.trips);
+          this.trips.map(
+            (trip) =>
+              (trip.duration = this.calculateDuration(
+                trip.departureTime,
+                trip.destinationTime
+              ))
+          );
+        },
+      });
+    }
   }
 
   calculateDuration(departureTime: string, destinationTime: string) {

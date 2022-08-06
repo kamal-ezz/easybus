@@ -7,7 +7,7 @@ export interface Trip {
   departureTime: string;
   destinationTime: string;
   duration?: string;
-  price: string;
+  price: number;
   availableSeats: number[];
 }
 

@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
-  errors: any = [];
+  error = '';
 
   constructor(
     private authService: AuthService,
@@ -24,6 +24,8 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    if (this.authService.isLoggedIn()) this.router.navigateByUrl('/');
   }
 
   get email() {
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
           invalidLogin: true,
         });
 
-        //this.errors.push(err.error.error);
+        this.error = 'Email or password are invalid';
       },
     });
   }

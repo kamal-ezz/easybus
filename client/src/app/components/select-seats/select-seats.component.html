@@ -1,5 +1,5 @@
-<div class="container parentcontainer">
-  <div class="row justify-content-center" *ngIf="busDetails">
+<div class="container mt-5">
+  <div class="row justify-content-center" *ngIf="trip">
     <div
       class="col col-lg-4 col-md-6 col-sm-12 bus"
       placement="right"
@@ -32,15 +32,13 @@
             <thead>
               <tr>
                 <th scope="col">Seats</th>
-                <th scope="col">Fare</th>
-                <th scope="col">Coach</th>
+                <th scope="col">Price</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let i of selectedSeats">
                 <td>{{ i }}</td>
-                <td>{{ busDetails["Fare"] | currency: "INR" }}</td>
-                <td>{{ busDetails["Coach Type"] }}</td>
+                <td>{{ trip.price | currency: "USD" }}</td>
               </tr>
             </tbody>
           </table>
@@ -59,7 +57,7 @@
       <div class="row total">
         <h4>
           Total :
-          {{ selectedSeats.length * busDetails["Fare"] | currency: "INR" }}
+          {{ selectedSeats.length * trip.price | currency: "USD" }}
         </h4>
       </div>
       <div class="row justify-content-center">

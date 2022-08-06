@@ -15,6 +15,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SelectSeatsComponent } from './components/select-seats/select-seats.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { FooterComponent } from './components/footer/footer.component';
     NotFoundComponent,
     SelectSeatsComponent,
     FooterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

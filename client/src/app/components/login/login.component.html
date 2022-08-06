@@ -1,9 +1,7 @@
 <section class="d-flex justify-content-center">
   <form class="mt-5" [formGroup]="form" (ngSubmit)="handleLogin()">
-    <div *ngIf="errors.length > 0" class="alert alert-danger">
-      <ul *ngFor="let error of errors">
-        <li>{{ error }}</li>
-      </ul>
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
     </div>
     <h3 class="mt-2 mb-4">Sign In</h3>
 

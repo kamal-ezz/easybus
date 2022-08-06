@@ -1,5 +1,6 @@
 package com.kamal.easybus.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,10 +83,12 @@ public class TripController {
 	 @GetMapping("/search")
 	 public Page<Trip> searchTrips(
 			 @RequestParam("departureCity") String departureCity,
-			 @RequestParam("arrivalCity") String arrivalCity,
+			 @RequestParam("destinationCity") String destinationCity,
 			 @RequestParam("date") String date,
 			 Pageable pageable){
-		 return tripService.searchTrips(departureCity,arrivalCity, date, pageable);
+
+		 Date d = Date.valueOf(date);		
+		 return tripService.searchTrips(departureCity,destinationCity, d, pageable);
 	 }
 
 }
