@@ -4,7 +4,7 @@
     <div class="col d-none d-lg-block">
       <img
         class="img img-fluid"
-        src="assets/planjourney.svg"
+        src="assets/White_silver_bus_vector_design_generated.jpg"
         alt="Trip Image"
       />
     </div>
@@ -80,6 +80,7 @@
                   name="date"
                   type="date"
                   formControlName="date"
+                  [min]="todayDate"
                 />
                 <div
                   *ngIf="

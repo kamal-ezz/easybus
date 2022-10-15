@@ -1,8 +1,3 @@
-.trip {
-  width: 900px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-
 .medium-text {
   font-size: x-large;
 }
@@ -16,4 +11,14 @@
   height: 1px;
   width: 50px;
   background-color: black;
+}
+
+.bus-logo {
+  width: 90%;
+}
+
+@media screen and (max-width: 992px) {
+  .bus-logo {
+    display: none;
+  }
 }

@@ -63,13 +63,24 @@ public class EasybusApplication implements CommandLineRunner {
 		Bus globus = new Bus("Globus","",globusEquipments);
 		busRepo.save(globus);
 
+		List<Equipments> ghazalaEquipments = Arrays.asList(new Equipments[]{Equipments.WIFI, Equipments.AIR_CONDITIONER, Equipments.LAMP, Equipments.TV, Equipments.HIGHWAY, Equipments.PHARMACY_BOX, Equipments.USB_CHARGER});
+		Bus ghazala = new Bus("Ghazala","",ghazalaEquipments);
+		busRepo.save(ghazala);
+
 		//Trips
-		Date date = Date.valueOf("2022-04-24");
-		Time departureTime = Time.valueOf("10:00:00");
-		Time destinationTime = Time.valueOf("14:15:00");
-		List<Integer> availableSeats = Arrays.asList(new Integer[]{10,11});
-		Trip trip = new Trip(globus,"Casablanca","Marrakech",date, departureTime, destinationTime,60.0, availableSeats, true);
-		tripRepo.save(trip);
+		Date date1 = Date.valueOf("2022-04-24");
+		Time departureTime1 = Time.valueOf("10:00:00");
+		Time destinationTime1 = Time.valueOf("14:15:00");
+		List<Integer> availableSeats1 = Arrays.asList(new Integer[]{10,11});
+		Trip trip1 = new Trip(globus,"Casablanca","Marrakech",date1, departureTime1, destinationTime1,60.0, availableSeats1, true);
+		tripRepo.save(trip1);
+
+		Date date2 = Date.valueOf("2022-04-24");
+		Time departureTime2 = Time.valueOf("15:00:00");
+		Time destinationTime2 = Time.valueOf("19:00:00");
+		List<Integer> availableSeats2 = Arrays.asList(new Integer[]{10,11});
+		Trip trip2 = new Trip(ghazala,"Casablanca","Marrakech",date2, departureTime2, destinationTime2,80.0, availableSeats2, true);
+		tripRepo.save(trip2);
 
 		//Roles
 		Role admin = new Role(ERole.ROLE_ADMIN);

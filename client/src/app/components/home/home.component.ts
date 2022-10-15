@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   submitted: boolean = false;
   departureCities: string[] = ['Marrakech', 'Casablanca', 'Rabat'];
   destinationCities: string[] = ['Marrakech', 'Casablanca', 'Rabat'];
+  todayDate = new Date().toJSON().slice(0, 10);
 
   constructor(private formBuilder: FormBuilder, private router: Router) {}
 
@@ -34,6 +35,10 @@ export class HomeComponent implements OnInit {
   get date() {
     return this.tripInfo.get('date');
   }
+
+  /*excludeDepartureCity(departureCities: string[]) {
+    return departureCities.filter((i) => i != this.departure?.value);
+  }*/
 
   onSubmit() {
     this.submitted = true;

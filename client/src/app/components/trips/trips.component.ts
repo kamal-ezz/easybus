@@ -10,6 +10,9 @@ import { TripService } from 'src/app/services/trip.service';
 })
 export class TripsComponent implements OnInit {
   trips: Trip[] = [];
+  price: number = 20;
+  departureTimes: string[] = ['morning', 'afternoon', 'evening'];
+  equipments: string[] = [];
 
   constructor(
     private tripService: TripService,

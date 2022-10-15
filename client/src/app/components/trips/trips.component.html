@@ -1,5 +1,93 @@
-<div class="mt-5 d-flex flex-column align-items-center">
-  <ng-container *ngFor="let trip of trips">
-    <app-trip [trip]="trip"></app-trip>
-  </ng-container>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-lg-2 shadow p-3">
+      <h6>Price</h6>
+      <div class="slidecontainer">
+        <input
+          type="range"
+          min="1"
+          max="100"
+          [value]="price"
+          [(ngModel)]="price"
+          class="slider"
+          id="myRange"
+        />
+      </div>
+      <span class="text-center">{{ price }}</span>
+      <h6 class="mt-3">Departure time</h6>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="flexCheckMorning"
+          checked
+        />
+        <label class="form-check-label" for="flexCheckMorning">
+          Morning (00-11)
+        </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="flexCheckAfternoon"
+          checked
+        />
+        <label class="form-check-label" for="flexCheckAfternoon">
+          Afternoon (11-15)
+        </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="flexCheckEvening"
+          checked
+        />
+        <label class="form-check-label" for="flexCheckEvening">
+          Evening (15-00)
+        </label>
+      </div>
+      <h6 class="mt-3">Equipments</h6>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value="wifi"
+          id="flexCheckWifi"
+        />
+        <label class="form-check-label" for="flexCheckWifi"> Wifi </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value="tv"
+          id="flexCheckTV"
+        />
+        <label class="form-check-label" for="flexCheckTV"> TV </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value="air_conditioner"
+          id="flexCheckAir"
+        />
+        <label class="form-check-label" for="flexCheckAir">
+          Air conditioner
+        </label>
+      </div>
+    </div>
+    <div class="col-lg-10 d-flex flex-column align-items-center">
+      <ng-container *ngFor="let trip of trips">
+        <ng-container *ngIf="trip.price > this.price">
+          <app-trip [trip]="trip"></app-trip>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
 </div>
