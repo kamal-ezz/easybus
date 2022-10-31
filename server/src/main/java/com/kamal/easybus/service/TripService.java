@@ -65,7 +65,7 @@ public class TripService {
 			String arrivalCity,
 		    Date date,
 		    Pageable pageable){
-		return tripRepo.findByDepartureCityAndDestinationCityAndDate(departureCity,arrivalCity, date, pageable);
-		//return tripRepo.findTrips(departureCity,arrivalCity, date, pageable);
+		//return tripRepo.findByDepartureCityAndDestinationCityAndDate(departureCity,arrivalCity, date, pageable);
+		return tripRepo.findTrips(departureCity,arrivalCity, date, pageable);
 	}
 }
