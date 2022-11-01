@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.kamal.easybus.exception.ResourceNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import com.kamal.easybus.repo.TripRepo;
 
 
 @Service
+@AllArgsConstructor
 public class TripService {
 	
 	@Autowired

@@ -3,6 +3,7 @@ package com.kamal.easybus.service;
 import com.kamal.easybus.exception.ResourceNotFoundException;
 import com.kamal.easybus.model.User;
 import com.kamal.easybus.repo.UserRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
     @Autowired

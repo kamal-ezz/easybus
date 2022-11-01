@@ -24,13 +24,10 @@ public class User{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	@NotBlank
 	private String firstName;
-
 	@NotBlank
 	private String lastName;
-
 	@NotBlank
 	@Size(min = 6, max = 20)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
