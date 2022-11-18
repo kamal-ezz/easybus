@@ -31,8 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     CustomUserDetailsService customUserDetailsService;
-
-
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
@@ -88,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                         .permitAll()
-                    .antMatchers("/api/v1/auth/**")
+                    .antMatchers("/api/v1/auth/**", "/actuator/**")
                         .permitAll()
                     .antMatchers(HttpMethod.GET, "/api/v1/trips/**", "/api/v1/users/**")
                         .permitAll()

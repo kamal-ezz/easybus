@@ -22,17 +22,18 @@ import java.util.*;
 @SpringBootApplication
 public class EasybusApplication implements CommandLineRunner {
 
-	@Autowired
 	BusRepo busRepo;
-
-	@Autowired
 	TripRepo tripRepo;
-
-	@Autowired
 	UserRepo userRepo;
+	RoleRepo roleRepo;
 
 	@Autowired
-	RoleRepo roleRepo;
+	public EasybusApplication(BusRepo busRepo, TripRepo tripRepo, UserRepo userRepo, RoleRepo roleRepo) {
+		this.busRepo = busRepo;
+		this.tripRepo = tripRepo;
+		this.userRepo = userRepo;
+		this.roleRepo = roleRepo;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(EasybusApplication.class, args);

@@ -17,14 +17,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "trips")
 public class Trip {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	@OneToOne
 	private Bus bus;
-
 	private String departureCity;
 	private String destinationCity;
 	private Date date;
@@ -36,8 +33,15 @@ public class Trip {
 	@ElementCollection
 	private List<Integer> availableSeats = new ArrayList<>();
 
-
-	public Trip(Bus bus, String departureCity, String destinationCity, Date date, Time departureTime, Time destinationTime, double price, List<Integer> availableSeats, Boolean isAvailable) {
+	public Trip(Bus bus,
+				String departureCity,
+				String destinationCity,
+				Date date,
+				Time departureTime,
+				Time destinationTime,
+				double price,
+				List<Integer> availableSeats,
+				Boolean isAvailable) {
 		this.bus = bus;
 		this.departureCity = departureCity;
 		this.destinationCity = destinationCity;
