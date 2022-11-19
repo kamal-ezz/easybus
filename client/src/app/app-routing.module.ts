@@ -5,7 +5,6 @@ import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
-import { SelectSeatsComponent } from './components/select-seats/select-seats.component';
 import { TripComponent } from './components/trip/trip.component';
 import { TripsComponent } from './components/trips/trips.component';
 
@@ -16,10 +15,6 @@ const routes: Routes = [
   {
     path: 'trips',
     component: TripsComponent,
-  },
-  {
-    path: 'trips/:id',
-    component: SelectSeatsComponent,
   },
   { path: '', component: HomeComponent },
   { path: '**', component: NotFoundComponent },

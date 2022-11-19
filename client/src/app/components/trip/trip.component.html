@@ -40,6 +40,121 @@
     class="col-lg-3 d-flex flex-column align-items-center justify-content-center"
   >
     <h3 class="text-primary">{{ trip.price }} DH</h3>
-    <a class="btn btn-primary mt-3" routerLink="{{ trip.id }}">Choose a seat</a>
+    <button
+      class="btn btn-primary mt-3"
+      data-toggle="modal"
+      data-target="#seatModal"
+    >
+      Choose a seat
+    </button>
+  </div>
+
+  <div
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    id="seatModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Select your seat</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container mt-5">
+            <div class="row justify-content-center">
+              <div
+                class="col col-lg-4 col-md-6 col-sm-12 bus"
+                placement="right"
+                ngbTooltip="Click on seat icons to select seats"
+              >
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                  <hr />
+                  <ng-container formArrayName="seats">
+                    <ng-container *ngFor="let _ of seats.controls; index as i">
+                      <label class="seatCheckbox" [id]="i">
+                        <input
+                          [formControlName]="i"
+                          type="checkbox"
+                          [id]="i"
+                          [attr.disabled]="seatStatus[i] ? true : null"
+                        />
+                        <span></span>
+                      </label>
+                      <br *ngIf="i % 4 == 3" />
+                    </ng-container>
+                  </ng-container>
+                </form>
+              </div>
+              <div class="col col-lg-5 offset-lg-1 col-md-6 col-sm-12">
+                <div class="row seatstable">
+                  <ng-container *ngIf="selectedSeats.length; else noseaterror">
+                    <h1>Selected seats</h1>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">Seats</th>
+                          <th scope="col">Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let i of selectedSeats">
+                          <td>{{ i }}</td>
+                          <td>{{ trip.price | currency: "USD" }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </ng-container>
+                  <ng-template #noseaterror>
+                    <div
+                      class="alert alert-danger"
+                      *ngIf="submitted"
+                      role="alert"
+                    >
+                      *You must select atleast one seat before proceeding.
+                    </div>
+                    <img
+                      src="assets/nodata.svg"
+                      class="img img-fluid"
+                      *ngIf="!submitted"
+                    />
+                  </ng-template>
+                </div>
+                <div class="row total">
+                  <h4>
+                    Total :
+                    {{ selectedSeats.length * trip.price | currency: "USD" }}
+                  </h4>
+                </div>
+                <div class="row justify-content-center">
+                  <button
+                    class="btn btn-primary btn-block"
+                    type="submit"
+                    (click)="submit()"
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

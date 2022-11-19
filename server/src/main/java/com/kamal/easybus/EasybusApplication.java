@@ -1,10 +1,11 @@
 package com.kamal.easybus;
 
-import com.kamal.easybus.model.*;
-import com.kamal.easybus.repo.BusRepo;
-import com.kamal.easybus.repo.RoleRepo;
-import com.kamal.easybus.repo.TripRepo;
-import com.kamal.easybus.repo.UserRepo;
+import com.kamal.easybus.entities.*;
+import com.kamal.easybus.enums.Equipments;
+import com.kamal.easybus.enums.Role;
+import com.kamal.easybus.repos.BusRepo;
+import com.kamal.easybus.repos.TripRepo;
+import com.kamal.easybus.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,14 +26,12 @@ public class EasybusApplication implements CommandLineRunner {
 	BusRepo busRepo;
 	TripRepo tripRepo;
 	UserRepo userRepo;
-	RoleRepo roleRepo;
 
 	@Autowired
-	public EasybusApplication(BusRepo busRepo, TripRepo tripRepo, UserRepo userRepo, RoleRepo roleRepo) {
+	public EasybusApplication(BusRepo busRepo, TripRepo tripRepo, UserRepo userRepo) {
 		this.busRepo = busRepo;
 		this.tripRepo = tripRepo;
 		this.userRepo = userRepo;
-		this.roleRepo = roleRepo;
 	}
 
 	public static void main(String[] args) {
@@ -45,11 +44,26 @@ public class EasybusApplication implements CommandLineRunner {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
 		corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
-				"Accept", "Jwt-Token", "Authorization", "Origin, Accept", "X-Requested-With",
-				"Access-Control-Request-Method", "Access-Control-Request-Headers"));
-		corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Jwt-Token", "Authorization",
-				"Access-Control-Allow-Origin", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+		corsConfiguration.setAllowedHeaders(Arrays.asList(
+				"Origin",
+				"Access-Control-Allow-Origin",
+				"Content-Type",
+				"Accept",
+				"Jwt-Token",
+				"Authorization",
+				"Origin, Accept",
+				"X-Requested-With",
+				"Access-Control-Request-Method",
+				"Access-Control-Request-Headers"));
+		corsConfiguration.setExposedHeaders(Arrays.asList(
+				"Origin",
+				"Content-Type",
+				"Accept",
+				"Jwt-Token",
+				"Authorization",
+				"Access-Control-Allow-Origin",
+				"Access-Control-Allow-Origin",
+				"Access-Control-Allow-Credentials"));
 		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
@@ -83,17 +97,10 @@ public class EasybusApplication implements CommandLineRunner {
 		Trip trip2 = new Trip(ghazala,"Casablanca","Marrakech",date2, departureTime2, destinationTime2,80.0, availableSeats2, true);
 		tripRepo.save(trip2);
 
-		//Roles
-		Role admin = new Role(ERole.ROLE_ADMIN);
-		Role user = new Role(ERole.ROLE_USER);
-		roleRepo.save(admin);
-		roleRepo.save(user);
-
 		//Users
 		User adminUser = new User("Kamal","Ezzarmou","kamal@admin.com",(new BCryptPasswordEncoder()).encode("admin00"),"000");
 		Set<Role> roles = new HashSet<>();
-		Role adminRole = roleRepo.findByName(ERole.ROLE_ADMIN)
-				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+		Role adminRole = Role.ADMIN;
 		roles.add(adminRole);
 		adminUser.setRoles(roles);
 		userRepo.save(adminUser);

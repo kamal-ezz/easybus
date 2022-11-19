@@ -1,8 +1,8 @@
 package com.kamal.easybus.security;
 
-import com.kamal.easybus.exception.ResourceNotFoundException;
-import com.kamal.easybus.model.User;
-import com.kamal.easybus.repo.UserRepo;
+import com.kamal.easybus.exceptions.ResourceNotFoundException;
+import com.kamal.easybus.entities.User;
+import com.kamal.easybus.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

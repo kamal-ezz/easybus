@@ -30,3 +30,7 @@ management:
     web:
       exposure:
         include: "*"
+
+paypal:
+  clientId: AZhgu21wrutKMxvWQNyEDvYym9sf-W3Pn9BWQQeop-JE8s-u9Gw21AkW6wHLXNXEAMzEvyEpt7bfRqoy
+  clientSecret: EEHyiMhB29HbRokijhrO9YrVsyvOhodyhwsDU_mXx3cMHK_ILHIPr5vGsK_iOZCfjdBeiX6hBLwKz3-S

@@ -1,6 +1,6 @@
 package com.kamal.easybus.security;
 
-import com.kamal.easybus.model.User;
+import com.kamal.easybus.entities.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,24 +15,18 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
     private Long id;
-
     private String firstName;
     private String lastName;
-
     private String email;
 
     @JsonIgnore
     private String password;
-
     private String phone;
-
-
     private Collection<? extends GrantedAuthority> authorities;
-
 
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getName().name())
+                new SimpleGrantedAuthority(role.name())
         ).collect(Collectors.toList());
 
         return new UserPrincipal(
