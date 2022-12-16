@@ -1,0 +1,24 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Build jar') {
+            steps {
+                sh '../docker-compose run -d --name easybus-db db'
+                sh 'mvn clean install -DskipTests' 
+            }
+        }
+        stage('Build docker image'){
+            steps {
+                sh '../docker-compose run -rm server'
+            }
+        }
+        stage('Tag image'){
+            steps {
+                sh 'docker tag easybus_server_rin'
+            }
+        }
+        stage('Push image'){
+            st
+        }
+    }
+}
