@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/easybus
+    url: jdbc:mysql://db:3306/easybus
     username: kamal
     password: kamal
     driver-class-name: com.mysql.cj.jdbc.Driver

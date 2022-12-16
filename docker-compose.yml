@@ -1,11 +1,22 @@
 version: '3.3'
 
 services:
+
+  server:
+    depends_on:
+      - db
+    restart: on-failure
+    build: server
+    ports:
+      - 8081:8081
+    networks:
+      - easybus-network
+
   db:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_DATABASE: 'easybus'
+      MYSQL_DATABASE: 'easybus-network'
       MYSQL_USER: 'kamal'
       MYSQL_PASSWORD: 'kamal'
       MYSQL_ROOT_PASSWORD: 'root'
@@ -15,6 +26,8 @@ services:
       - '3306'
     volumes:
       - my-db:/var/lib/mysql
+    networks:
+      - easybus-network
 
   prometheus:
     image: prom/prometheus:latest
@@ -25,6 +38,8 @@ services:
       - '9090'
     volumes:
       - /home/kamal/Desktop/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - easybus-network
 
   grafana:
     image: grafana/grafana:latest
@@ -33,6 +48,11 @@ services:
       - '3000:3000'
     expose:
       - '3000'
+    networks:
+      - easybus-network
 
 volumes:
   my-db:
+
+networks:
+  easybus-network:
