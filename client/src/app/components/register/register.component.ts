@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
+  user!: User;
 
   constructor(
     private authService: AuthService,
@@ -30,48 +31,30 @@ export class RegisterComponent implements OnInit {
     if (this.authService.isLoggedIn()) this.router.navigateByUrl('/');
   }
 
-  get email() {
-    return this.form.get('email');
-  }
 
-  get password() {
-    return this.form.get('password');
-  }
-
-  get firstName() {
-    return this.form.get('firstName');
-  }
-
-  get lastName() {
-    return this.form.get('lastName');
-  }
-
-  get phone() {
-    return this.form.get('phone');
-  }
 
   handleRegister() {
-    this.authService
-      .register(
-        this.firstName?.value,
-        this.lastName?.value,
-        this.email?.value,
-        this.password?.value,
-        this.phone?.value
-      )
-      .subscribe({
-        next: (data) => {
-          const user = data as User;
-          //this.authService.login(user.email, user.password);
-          this.router.navigateByUrl('/login');
-        },
-        error: (err) => {
-          this.form.setErrors({
-            invalidRegister: true,
-          });
+    this.authService.register({
+        firstName: this.form.get('firstName')?.value,
+        lastName: this.form.get('lastName')?.value,
+        email: this.form.get('email')?.value,
+        password: this.form.get('password')?.value,
+        phone: this.form.get('phone')?.value,
+      })
+                    .subscribe({
+                      next: (data) => {
+                        const user = data as User
+                        this.authService.saveToken(user.token || '');
+                        this.authService.addUserToLocalCache(user);
+                        this.router.navigateByUrl('/login');
+                      },
+                      error: (err) => {
+                        this.form.setErrors({
+                          invalidRegister: true,
+                        });
 
-          //this.errors.push(err.error.error);
-        },
-      });
+                        //this.errors.push(err.error.error);
+                      },
+                    });
   }
 }

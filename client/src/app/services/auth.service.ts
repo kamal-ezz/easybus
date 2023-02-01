@@ -29,23 +29,9 @@ export class AuthService {
     );
   }
 
-  register(
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    phone: string
-  ) {
+  register(user: User) {
     return this.http.post(
-      environment.apiUrl + '/api/v1/auth/register',
-      {
-        firstName,
-        lastName,
-        email,
-        password,
-        phone,
-      },
-      httpOptions
+      environment.apiUrl + '/api/v1/auth/register', user, httpOptions
     );
   }
 
@@ -80,10 +66,9 @@ export class AuthService {
   }*/
 
   isLoggedIn() {
-    const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
     if (!token) return false;
-    const isExpired = helper.isTokenExpired(token);
+    const isExpired = (new JwtHelperService()).isTokenExpired(token);
     if (!isExpired) return true;
     return false;
   }

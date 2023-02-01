@@ -2,57 +2,57 @@ version: '3.3'
 
 services:
 
-  server:
-    depends_on:
-      - db
-    restart: on-failure
-    build: server
-    ports:
-      - 8081:8081
-    networks:
-      - easybus-network
+  #server:
+  #  depends_on:
+  #    - db
+  #  restart: on-failure
+  #  build: server
+  #  ports:
+  #    - 8081:8081
+  #  networks:
+  #    - easybus-network
 
   db:
     image: mysql:latest
-    restart: always
+    #restart: always
     environment:
-      MYSQL_DATABASE: 'easybus-network'
-      MYSQL_USER: 'kamal'
-      MYSQL_PASSWORD: 'kamal'
-      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: easybus
+      MYSQL_USER: kamal
+      MYSQL_PASSWORD: kamal
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - '3306:3306'
+      - 3306:3306
     expose:
-      - '3306'
+      - 3306
     volumes:
       - my-db:/var/lib/mysql
-    networks:
-      - easybus-network
+    #networks:
+    #  - easybus-network
 
-  prometheus:
-    image: prom/prometheus:latest
-    restart: on-failure
-    ports:
-      - '9090:9090'
-    expose:
-      - '9090'
-    volumes:
-      - /home/kamal/Desktop/prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - easybus-network
+  #prometheus:
+  #  image: prom/prometheus:latest
+  #  restart: on-failure
+  #  ports:
+  #    - '9090:9090'
+  #  expose:
+  #    - '9090'
+  #  volumes:
+  #    - /home/kamal/Desktop/prometheus.yml:/etc/prometheus/prometheus.yml
+  #  networks:
+  #    - easybus-network
 
-  grafana:
-    image: grafana/grafana:latest
-    restart: on-failure
-    ports:
-      - '3000:3000'
-    expose:
-      - '3000'
-    networks:
-      - easybus-network
+  #grafana:
+  #  image: grafana/grafana:latest
+  #  restart: on-failure
+  #  ports:
+  #    - '3000:3000'
+  #  expose:
+  #    - '3000'
+  #  networks:
+  #    - easybus-network
 
 volumes:
   my-db:
 
-networks:
-  easybus-network:
+#networks:
+#  easybus-network:
