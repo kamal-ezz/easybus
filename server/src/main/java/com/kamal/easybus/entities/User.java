@@ -2,9 +2,7 @@ package com.kamal.easybus.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kamal.easybus.enums.Role;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,11 +11,12 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 
+
+@Data
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-@Getter
-@Setter
+@Builder
+@AllArgsConstructor
 public class User{
 	
 	@Id

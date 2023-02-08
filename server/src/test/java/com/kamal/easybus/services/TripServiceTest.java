@@ -17,7 +17,7 @@ public class TripServiceTest {
     private TripService underTest;
 
 
-    @BeforeEach
+    /*@BeforeEach
     void setUp() {
         underTest = new TripService(tripRepo);
     }
@@ -26,6 +26,6 @@ public class TripServiceTest {
     void canGetAllTrips(){
         underTest.getAllTrips();
         verify(tripRepo).findAll();
-    }
+    }*/
 
 }

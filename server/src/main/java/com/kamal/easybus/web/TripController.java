@@ -3,6 +3,8 @@ package com.kamal.easybus.web;
 import java.sql.Date;
 import java.util.List;
 
+import com.kamal.easybus.dtos.TripDTO;
+import com.kamal.easybus.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,8 +37,8 @@ public class TripController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Trip>> getTrips() {
-		List<Trip> trips = tripService.getAllTrips();
+	public ResponseEntity<List<TripDTO>> getTrips() {
+		List<TripDTO> trips = tripService.getAllTrips();
 		if(trips.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -44,36 +46,30 @@ public class TripController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Trip> getTripById(@PathVariable("id") long id) {
-		Trip trip = tripService.getTripById(id);
-		return new ResponseEntity<>(trip,HttpStatus.OK);
+	public ResponseEntity<?> getTripById(@PathVariable("id") long id) {
+		try{
+			return new ResponseEntity<>(tripService.getTripById(id),HttpStatus.OK);
+		}catch (ResourceNotFoundException e){
+			return new ResponseEntity<>("Trip Not Found",HttpStatus.OK);
+		}
+
 	}
 	
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Trip> addTrip(@RequestBody Trip trip){
-		Trip _trip = tripService.addTrip(new Trip(
-				trip.getBus(),
-				trip.getDepartureCity(),
-				trip.getDestinationCity(),
-				trip.getDate(),
-				trip.getDepartureTime(),
-				trip.getDestinationTime(),
-				trip.getPrice(),
-				trip.getAvailableSeats(),
-				trip.getIsAvailable()
-			));
-		return new ResponseEntity<>(_trip,HttpStatus.CREATED);
+	public ResponseEntity<String> addTrip(@RequestBody TripDTO tripDTO){
+		tripService.addTrip(tripDTO);
+		return new ResponseEntity<>("Trip successfully added",HttpStatus.CREATED);
 	}
 	
 	 @PutMapping("/{id}")
 	 @PreAuthorize("hasRole('ADMIN')")
-	  public ResponseEntity<?> updateTrip(@PathVariable("id") long id, @RequestBody Trip trip) {
-		Trip _trip = tripService.updateTrip(id,trip);
-	    if (_trip != null) {
-	      return new ResponseEntity<>(_trip, HttpStatus.OK);
-	    } else {
-	      return new ResponseEntity<>("Trip not found",HttpStatus.NOT_FOUND);
+	  public ResponseEntity<?> updateTrip(@PathVariable("id") long id, @RequestBody TripDTO trip) {
+	    try {
+			tripService.updateTrip(id,trip);
+	        return new ResponseEntity<>("Trip successfully updated", HttpStatus.OK);
+	    } catch (ResourceNotFoundException e){
+	      return new ResponseEntity<>("Trip not found",HttpStatus.OK);
 	    }
 	  }
 	
@@ -85,14 +81,14 @@ public class TripController {
 	 }
 	 
 	 @GetMapping("/search")
-	 public Page<Trip> searchTrips(
+	 public ResponseEntity<Page<Trip>> searchTrips(
 			 @RequestParam("departureCity") String departureCity,
 			 @RequestParam("destinationCity") String destinationCity,
 			 @RequestParam("date") String date,
 			 Pageable pageable){
 
 		 Date d = Date.valueOf(date);		
-		 return tripService.searchTrips(departureCity,destinationCity, d, pageable);
+		 return new ResponseEntity<>(tripService.searchTrips(departureCity,destinationCity, d, pageable), HttpStatus.OK);
 	 }
 
 }

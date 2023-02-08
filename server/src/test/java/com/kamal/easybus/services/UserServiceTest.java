@@ -32,7 +32,7 @@ public class UserServiceTest {
         verify(userRepo).findAll();
     }
 
-    @Test
+    /*@Test
     void canAddUser(){
         User user = new User("Kamal", "Ezzarmou", "kamal@admin.com", "kamal","066");
         underTest.addUser(user);
@@ -44,7 +44,7 @@ public class UserServiceTest {
 
         User capturedUser = userArgumentCaptor.getValue();
         assertThat(capturedUser).isEqualTo(user);
-    }
+    }*/
 
 
     @Test

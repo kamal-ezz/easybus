@@ -6,8 +6,10 @@ import com.kamal.easybus.dtos.LoginRequestDTO;
 import com.kamal.easybus.dtos.LoginResponseDTO;
 import com.kamal.easybus.enums.Role;
 import com.kamal.easybus.entities.User;
+import com.kamal.easybus.exceptions.BadRequestException;
 import com.kamal.easybus.security.UserPrincipal;
 import com.kamal.easybus.security.jwt.JwtTokenProvider;
+import com.kamal.easybus.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,32 +32,19 @@ import java.util.Set;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    AuthenticationManager authenticationManager;
-    JwtTokenProvider tokenProvider;
-    UserRepo userRepo;
-    PasswordEncoder passwordEncoder;
+    AuthService authService;
 
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider, UserRepo userRepo, PasswordEncoder passwordEncoder) {
-        this.authenticationManager = authenticationManager;
-        this.tokenProvider = tokenProvider;
-        this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = tokenProvider.generateToken(authentication);
-        //User loggedUser = userRepo.findById(tokenProvider.getUserIdFromJWT(jwt)).get();
-        UserPrincipal userDetails = (UserPrincipal) authentication.getPrincipal();
+        Authentication authentication = authService.login(loginRequest);
+        String jwt = authService.generateToken(authentication);
+        UserPrincipal userDetails = authService.getUserDetails(authentication);
         return ResponseEntity.ok(new LoginResponseDTO(
                     userDetails.getFirstName(),
                     userDetails.getLastName(),
@@ -67,19 +56,20 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> signup(@Valid @RequestBody User signUpRequest) {
-        if(userRepo.existsByEmail(signUpRequest.getEmail())) {
+        try {
+            Authentication authentication = authService.register(signUpRequest);
+            String jwt = authService.generateToken(authentication);
+            UserPrincipal userDetails = authService.getUserDetails(authentication);
+            return ResponseEntity.ok(new LoginResponseDTO(
+                    userDetails.getFirstName(),
+                    userDetails.getLastName(),
+                    userDetails.getEmail(),
+                    userDetails.getPhone(),
+                    jwt
+            ));
+        }catch (BadRequestException e){
             return new ResponseEntity<>("Email Address already in use!",
                     HttpStatus.BAD_REQUEST);
         }
-        User user = new User(
-                signUpRequest.getFirstName(),
-                signUpRequest.getLastName(),
-                signUpRequest.getEmail(),
-                passwordEncoder.encode(signUpRequest.getPassword()),
-                signUpRequest.getPhone());
-
-        user.setRoles(Set.of(Role.USER));
-        User result = userRepo.save(user);
-        return ResponseEntity.ok(result);
     }
 }

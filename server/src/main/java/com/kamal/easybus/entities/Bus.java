@@ -1,33 +1,26 @@
 package com.kamal.easybus.entities;
 
-import com.kamal.easybus.enums.Equipments;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.kamal.easybus.enums.Equipment;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "buses")
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
+@Entity
+@Builder
+@AllArgsConstructor
 public class Bus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(unique = true)
     private String company;
     private String logo;
 
     @ElementCollection
-    private List<Equipments> equipments;
+    private List<Equipment> equipments;
 
-    public Bus(String company, String logo, List<Equipments> equipments) {
-        this.company = company;
-        this.logo = logo;
-        this.equipments = equipments;
-    }
 }

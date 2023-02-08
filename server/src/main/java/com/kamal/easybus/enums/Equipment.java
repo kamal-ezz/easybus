@@ -1,6 +1,7 @@
 package com.kamal.easybus.enums;
 
-public enum Equipments {
+
+public enum Equipment {
     WIFI,
     TV,
     AIR_CONDITIONER,

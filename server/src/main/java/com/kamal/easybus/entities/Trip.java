@@ -7,15 +7,13 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
-@Table(name = "trips")
+@Builder
+@AllArgsConstructor
 public class Trip {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,26 +28,6 @@ public class Trip {
 	private double price;
 	private Boolean isAvailable;
 
-	@ElementCollection
-	private List<Integer> availableSeats = new ArrayList<>();
-
-	public Trip(Bus bus,
-				String departureCity,
-				String destinationCity,
-				Date date,
-				Time departureTime,
-				Time destinationTime,
-				double price,
-				List<Integer> availableSeats,
-				Boolean isAvailable) {
-		this.bus = bus;
-		this.departureCity = departureCity;
-		this.destinationCity = destinationCity;
-		this.date = date;
-		this.departureTime = departureTime;
-		this.destinationTime = destinationTime;
-		this.price = price;
-		this.availableSeats = availableSeats;
-		this.isAvailable = isAvailable;
-	}
+	@OneToMany
+	private List<Seat> availableSeats;
 }
