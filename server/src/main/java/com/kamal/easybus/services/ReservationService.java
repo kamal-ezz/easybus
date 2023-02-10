@@ -1,5 +1,10 @@
 package com.kamal.easybus.services;
 
+import com.kamal.easybus.entities.Trip;
+import com.kamal.easybus.enums.Status;
+import com.kamal.easybus.exceptions.ResourceNotFoundException;
+import com.kamal.easybus.repos.ReservationRepo;
+import com.kamal.easybus.repos.TripRepo;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -13,7 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class PaypalPaymentService {
+public class ReservationService {
+
+    TripRepo tripRepo;
+    ReservationRepo reservationRepo;
 
     @Value("${paypal.clientId}")
     String clientId;
@@ -67,7 +75,7 @@ public class PaypalPaymentService {
     }
 
     public Map<String, Object> completePayment(HttpServletRequest req){
-        Map<String, Object> response = new HashMap();
+        Map<String, Object> response = new HashMap<>();
         Payment payment = new Payment();
         payment.setId(req.getParameter("paymentId"));
 
@@ -85,6 +93,28 @@ public class PaypalPaymentService {
         }
         return response;
     }
+
+    public void makeReservation(String sum, Long id){
+        Trip trip = tripRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trip", "id", id));
+        trip.setStatus(Status.IN_PROGRESS);
+        tripRepo.save(trip);
+
+        createPayment(sum);
+    }
+
+    public void acceptReservation(Long id){
+        Trip trip = tripRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trip", "id", id));
+        trip.setStatus(Status.VALIDATED);
+        tripRepo.save(trip);
+    }
+
+    public void cancelReservation(Long id){
+        Trip trip = tripRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trip", "id", id));
+        trip.setStatus(Status.VALIDATED);
+        tripRepo.save(trip);
+    }
+
+
 
 
 }

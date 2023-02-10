@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.kamal.easybus.enums.Status;
 import lombok.*;
 
 @Data
@@ -27,7 +28,10 @@ public class Trip {
 	private Time destinationTime;
 	private double price;
 	private Boolean isAvailable;
-
 	@OneToMany
 	private List<Seat> availableSeats;
+	@OneToMany
+	private List<Reservation> reservations;
+
+	private Status status;
 }
