@@ -2,10 +2,10 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
-.main {
+/*.main {
   height: 100vh;
   margin-bottom: 200px;
-}
+}*/
 
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

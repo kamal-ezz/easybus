@@ -96,7 +96,12 @@ public class TripService {
 	public Trip mapTripDTOToTrip(TripDTO tripDTO){
 		Bus bus = busRepo.findByCompany(tripDTO.getBusCompany())
                 .orElseThrow(() -> new ResourceNotFoundException("Trip", "company", tripDTO.getBusCompany()));
-        List<Seat> seats = tripDTO.getAvailableSeats().stream().map(Seat::new).collect(Collectors.toList());
+        List<Seat> seats = tripDTO.getAvailableSeats().stream().map(
+                seat -> {
+
+                    return new Seat(seat);
+                }
+        ).collect(Collectors.toList());
 		return Trip.builder()
 				.bus(bus)
 				.departureCity(tripDTO.getDepartureCity())

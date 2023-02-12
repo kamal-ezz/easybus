@@ -1,108 +1,132 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <h2 class="text-center mb-5">Buy your bus tickets at the best price!</h2>
-    <div class="col d-none d-lg-block">
-      <img
-        class="img img-fluid"
-        src="assets/White_silver_bus_vector_design_generated.jpg"
-        alt="Trip Image"
-      />
-    </div>
-    <div class="col col-lg-6 col-md-10 col-sm-12">
-      <div class="card">
-        <h5 class="card-header">Plan Trip</h5>
-        <div class="card-body p-4">
-          <form [formGroup]="tripInfo" (ngSubmit)="onSubmit()">
-            <div
-              *ngIf="submitted && destination?.errors"
-              class="alert alert-danger"
+<section class="hero">
+  <h2 class="hero-title">Buy your bus tickets at the best price!</h2>
+  <div class="search">
+    <form [formGroup]="tripInfo" (ngSubmit)="onSubmit()">
+      <!-- <div *ngIf="submitted && destination?.errors" class="alert alert-danger">
+        Source and destination can not be same.
+      </div> -->
+
+      <div
+        *ngIf="submitted && destination == departure"
+        class="alert alert-danger"
+      >
+        Source and destination cannot be the same.
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+          <label for="departure" class="mb-2">Leaving From</label>
+          <select
+            class="form-control"
+            id="departure"
+            name="departure"
+            formControlName="departure"
+          >
+            <option *ngFor="let city of departureCities" [value]="city">
+              {{ city }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              departure?.invalid &&
+              (departure?.dirty || departure?.touched || submitted)
+            "
+            class="text-danger"
+          >
+            <small *ngIf="departure?.errors">Source Location is required</small>
+          </div>
+        </div>
+
+        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+          <label for="destination" class="mb-2">Going To</label>
+          <select
+            class="form-control"
+            id="destination"
+            name="destination"
+            formControlName="destination"
+          >
+            <option *ngFor="let city of destinationCities" [value]="city">
+              {{ city }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              destination?.invalid &&
+              (destination?.dirty || destination?.touched || submitted)
+            "
+            class="text-danger"
+          >
+            <small *ngIf="destination?.errors"
+              >Destination Location is required</small
             >
-              Source and destination can not be same.
-            </div>
+          </div>
+        </div>
 
-            <div class="form-row">
-              <div class="form-group col">
-                <label for="departure">Leaving From</label>
-                <select
-                  class="form-control"
-                  id="departure"
-                  name="departure"
-                  formControlName="departure"
-                >
-                  <option *ngFor="let city of departureCities" [value]="city">
-                    {{ city }}
-                  </option>
-                </select>
-                <div
-                  *ngIf="
-                    departure?.invalid &&
-                    (departure?.dirty || departure?.touched || submitted)
-                  "
-                  class="text-danger"
-                >
-                  <small *ngIf="departure?.errors"
-                    >Source Location is required</small
-                  >
-                </div>
-              </div>
-
-              <div class="form-group col">
-                <label for="destination">Going To</label>
-                <select
-                  class="form-control"
-                  id="destination"
-                  name="destination"
-                  formControlName="destination"
-                >
-                  <option *ngFor="let city of destinationCities" [value]="city">
-                    {{ city }}
-                  </option>
-                </select>
-                <div
-                  *ngIf="
-                    destination?.invalid &&
-                    (destination?.dirty || destination?.touched || submitted)
-                  "
-                  class="text-danger"
-                >
-                  <small *ngIf="destination?.errors"
-                    >Destination Location is required</small
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="form-row justify-content-center">
-              <div class="form-group col-8">
-                <label for="date">Departure Date</label>
-                <input
-                  class="form-control"
-                  id="date"
-                  name="date"
-                  type="date"
-                  formControlName="date"
-                  [min]="todayDate"
-                />
-                <div
-                  *ngIf="
-                    date?.invalid && (date?.dirty || date?.touched || submitted)
-                  "
-                  class="text-danger"
-                >
-                  <small *ngIf="date?.errors">Journey date is required</small>
-                  <small *ngIf="date?.errors"
-                    >Journey date is Invalid.(Do not enter old date)</small
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="row justify-content-center mt-4">
-              <button type="submit" class="btn btn-primary">
-                Search Buses
-              </button>
-            </div>
-          </form>
+        <div class="form-group col-md-3 col-sm-12">
+          <label for="date" class="mb-2">Departure Date</label>
+          <input
+            class="form-control"
+            id="date"
+            name="date"
+            type="date"
+            formControlName="date"
+            [min]="todayDate"
+          />
+          <div
+            *ngIf="date?.invalid && (date?.dirty || date?.touched || submitted)"
+            class="text-danger"
+          >
+            <small *ngIf="date?.errors">Journey date is required</small>
+            <small *ngIf="date?.errors"
+              >Journey date is Invalid.(Do not enter old date)</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-md-3 col-sm-12">
+          <div class="mb-4" style="display: inline-block; width: 100%"></div>
+          <button type="submit" class="btn ms-3">Search</button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
-</div>
+</section>
+<section class="about">
+  <h3>Welcome to Easybus</h3>
+
+  <h5 class="mt-3">
+    Looking for a convenient, affordable, and safe way to travel? Look no
+    further than Easybus.
+  </h5>
+
+  <p class="mt-3">
+    With our easy-to-use platform, you can book bus tickets for trips anywhere
+    in the country. Whether you're traveling for business or leisure, we have a
+    range of options to choose from, including premium and budget-friendly
+    services.
+  </p>
+
+  <h5 class="mt-5">Why Choose Easybus?</h5>
+
+  <ul class="mt-3">
+    <li>Simple and secure online booking</li>
+    <li class="mt-2">Wide selection of bus routes and operators</li>
+    <li class="mt-2">Affordable prices and special deals</li>
+    <li class="mt-2">Real-time bus tracking and notifications</li>
+    <li class="mt-2">24/7 customer support</li>
+  </ul>
+
+  <p class="mt-5">
+    Start Your Journey Today Book your bus tickets now and enjoy a hassle-free
+    travel experience.
+  </p>
+
+  <p>
+    Browse our wide range of bus routes, select your preferred bus, and make a
+    secure payment in just a few clicks.
+  </p>
+
+  <p>
+    Join the thousands of happy travelers who trust Easybus for their
+    transportation needs. Book now and experience the best in bus travel!
+  </p>
+</section>

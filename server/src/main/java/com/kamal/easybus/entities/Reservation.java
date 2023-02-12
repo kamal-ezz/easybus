@@ -19,6 +19,7 @@ public class Reservation {
 	private Long id;
 
 	@ManyToOne
+	@JoinColumn(name = "trip_id")
 	private Trip trip;
 
 	private Integer seatNumber;

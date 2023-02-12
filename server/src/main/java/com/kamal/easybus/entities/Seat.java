@@ -21,5 +21,6 @@ public class Seat {
     private Integer number;
 
     @ManyToOne
+    @JoinColumn(name = "trip_id")
     private Trip trip;
 }

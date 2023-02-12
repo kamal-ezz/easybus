@@ -5,22 +5,17 @@ import com.kamal.easybus.entities.Bus;
 import com.kamal.easybus.enums.Equipment;
 import com.kamal.easybus.exceptions.ResourceNotFoundException;
 import com.kamal.easybus.repos.BusRepo;
-import com.kamal.easybus.repos.EquipmentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
 
 @Service
 public class BusService {
 
     BusRepo busRepo;
-    EquipmentRepo equipmentRepo;
 
     @Autowired
-    public BusService(BusRepo busRepo, EquipmentRepo equipmentRepo) {
+    public BusService(BusRepo busRepo) {
         this.busRepo = busRepo;
-        this.equipmentRepo = equipmentRepo;
     }
 
     public Bus getBusByCompany(String company){
