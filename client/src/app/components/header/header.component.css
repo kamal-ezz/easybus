@@ -3,17 +3,20 @@ a {
   color: black;
 }
 
-.toggle {
-  border: none;
-}
-
-.toggle:focus {
-  outline: none;
-  border: none;
-}
-
 nav {
   height: 60px;
-  background-color: transparent;
-  z-index: 100;
+}
+
+.dropdown {
+  display: none;
+}
+
+@media screen and (max-width: 700px) {
+  .navbar-nav {
+    display: none;
+  }
+
+  .dropdown {
+    display: block;
+  }
 }

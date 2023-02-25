@@ -1,6 +1,8 @@
 export interface Trip {
   id: number;
-  bus: Bus;
+  busCompany: string;
+  busLogo: string;
+  busEquipments: string[];
   departureCity: string;
   destinationCity: string;
   date: string;
@@ -8,12 +10,6 @@ export interface Trip {
   destinationTime: string;
   duration?: string;
   price: number;
+  isAvailable: boolean;
   availableSeats: number[];
-}
-
-interface Bus {
-  id: number;
-  company: string;
-  logo: string;
-  equipments: string[];
 }

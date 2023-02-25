@@ -10,7 +10,7 @@ import { TripService } from 'src/app/services/trip.service';
 })
 export class TripsComponent implements OnInit {
   trips: Trip[] = [];
-  price: number = 20;
+  price: number = 60;
   departureTimes: string[] = ['morning', 'afternoon', 'evening'];
   equipments: string[] = [];
 
@@ -55,5 +55,46 @@ export class TripsComponent implements OnInit {
       ':' +
       (durationInMins % 60).toString();
     return duration;
+  }
+
+  period(trip: Trip): string {
+    const departureTimeHour = parseInt(trip.departureTime.substring(0, 2));
+
+    if (0 <= departureTimeHour && departureTimeHour <= 11) return 'morning';
+    else if (11 <= departureTimeHour && departureTimeHour <= 15)
+      return 'afternoon';
+    else if (15 <= departureTimeHour && departureTimeHour <= 23)
+      return 'evening';
+    else return '';
+  }
+
+  changeDepartureTimes(event: any): void {
+    const item = event.target.value;
+    if (event.target.checked) {
+      this.departureTimes.push(item);
+    } else {
+      const index = this.departureTimes.indexOf(item);
+      if (index !== -1) {
+        this.departureTimes.splice(index, 1);
+      }
+    }
+    console.log(this.departureTimes); // to see the checkedItems array in console
+  }
+
+  changeEquipments(event: any): void {
+    const item = event.target.value;
+    if (event.target.checked) {
+      this.equipments.push(item);
+    } else {
+      const index = this.departureTimes.indexOf(item);
+      if (index !== -1) {
+        this.equipments.splice(index, 1);
+      }
+    }
+    console.log(this.equipments); // to see the checkedItems array in console
+  }
+
+  hasAll(equipments: string[]): boolean {
+    return this.equipments.every((e) => equipments.includes(e.toUpperCase()));
   }
 }

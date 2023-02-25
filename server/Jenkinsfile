@@ -9,16 +9,18 @@ pipeline {
         }
         stage('Build docker image'){
             steps {
-                sh '../docker-compose run -rm server'
+                sh 'docker build -t easybus:latest .'
             }
         }
-        stage('Tag image'){
+        /*stage('Tag image'){
             steps {
-                sh 'docker tag easybus_server_rin'
+                sh 'docker tag easybus kamalezzarmrou/easybus_backend'
             }
         }
         stage('Push image'){
-            st
-        }
+            steps {
+                sh 'docker push kamalezzarmrou/easybus_backend'
+            }
+        }*/
     }
 }

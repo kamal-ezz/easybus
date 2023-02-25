@@ -81,7 +81,7 @@ public class TripController {
 	 }
 	 
 	 @GetMapping("/search")
-	 public ResponseEntity<Page<Trip>> searchTrips(
+	 public ResponseEntity<List<TripDTO>> searchTrips(
 			 @RequestParam("departureCity") String departureCity,
 			 @RequestParam("destinationCity") String destinationCity,
 			 @RequestParam("date") String date,

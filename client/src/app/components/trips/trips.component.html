@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="container mt-5">
   <div class="row">
     <div class="col-lg-2 shadow p-3">
       <h6>Price</h6>
@@ -6,21 +6,22 @@
         <input
           type="range"
           min="1"
-          max="100"
+          max="200"
           [value]="price"
           [(ngModel)]="price"
           class="slider"
           id="myRange"
         />
       </div>
-      <span class="text-center">{{ price }}</span>
+      <span class="text-center">< {{ price }}</span>
       <h6 class="mt-3">Departure time</h6>
       <div class="form-check">
         <input
           class="form-check-input"
           type="checkbox"
-          value=""
+          value="morning"
           id="flexCheckMorning"
+          (change)="changeDepartureTimes($event)"
           checked
         />
         <label class="form-check-label" for="flexCheckMorning">
@@ -31,8 +32,9 @@
         <input
           class="form-check-input"
           type="checkbox"
-          value=""
+          value="afternoon"
           id="flexCheckAfternoon"
+          (change)="changeDepartureTimes($event)"
           checked
         />
         <label class="form-check-label" for="flexCheckAfternoon">
@@ -43,8 +45,9 @@
         <input
           class="form-check-input"
           type="checkbox"
-          value=""
+          value="evening"
           id="flexCheckEvening"
+          (change)="changeDepartureTimes($event)"
           checked
         />
         <label class="form-check-label" for="flexCheckEvening">
@@ -57,6 +60,7 @@
           class="form-check-input"
           type="checkbox"
           value="wifi"
+          (change)="changeEquipments($event)"
           id="flexCheckWifi"
         />
         <label class="form-check-label" for="flexCheckWifi"> Wifi </label>
@@ -66,6 +70,7 @@
           class="form-check-input"
           type="checkbox"
           value="tv"
+          (change)="changeEquipments($event)"
           id="flexCheckTV"
         />
         <label class="form-check-label" for="flexCheckTV"> TV </label>
@@ -75,6 +80,7 @@
           class="form-check-input"
           type="checkbox"
           value="air_conditioner"
+          (change)="changeEquipments($event)"
           id="flexCheckAir"
         />
         <label class="form-check-label" for="flexCheckAir">
@@ -84,7 +90,13 @@
     </div>
     <div class="col-lg-10 d-flex flex-column align-items-center">
       <ng-container *ngFor="let trip of trips">
-        <ng-container *ngIf="trip.price > this.price">
+        <ng-container
+          *ngIf="
+            trip.price <= this.price &&
+            departureTimes.includes(period(trip)) &&
+            hasAll(trip.busEquipments)
+          "
+        >
           <app-trip [trip]="trip"></app-trip>
         </ng-container>
       </ng-container>

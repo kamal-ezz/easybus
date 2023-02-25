@@ -77,6 +77,7 @@ public class Seeder {
                 .destinationTime(Time.valueOf("14:15:00"))
                 .isAvailable(true)
                 .availableSeats(List.of(10,11))
+                .price(100)
                 .build();
 
         tripService.addTrip(trip1);
@@ -92,6 +93,7 @@ public class Seeder {
                 .destinationTime(Time.valueOf("19:00:00"))
                 .isAvailable(true)
                 .availableSeats(List.of(10,11))
+                .price(100)
                 .build();
 
         tripService.addTrip(trip2);

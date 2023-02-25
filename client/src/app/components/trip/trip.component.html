@@ -1,13 +1,13 @@
-<div class="row shadow p-3 mb-5">
+<div class="row shadow p-3 mt-5">
   <div class="col-lg-3 d-flex align-items-center">
     <img
-      [src]="'assets/buses/' + trip.bus.company.toLowerCase() + '.jpg'"
+      [src]="'assets/buses/' + trip.busCompany.toLowerCase() + '.jpg'"
       alt="logo"
       class="bus-logo"
     />
   </div>
   <div class="col-lg-6 d-flex flex-column align-items-center">
-    <h5>{{ trip.bus.company }}</h5>
+    <h5>{{ trip.busCompany }}</h5>
     <div class="d-flex align-items-center">
       <div class="me-3">
         <h3>{{ trip.departureTime.substring(0, 5) }}</h3>
@@ -28,7 +28,7 @@
     </div>
     <div class="mt-3">
       Equipments :
-      <ng-container *ngFor="let equip of trip.bus.equipments">
+      <ng-container *ngFor="let equip of trip.busEquipments">
         <img
           class="mx-1"
           [src]="'assets/equips/' + equip.toLowerCase() + '.png'"
@@ -109,7 +109,7 @@
                       <tbody>
                         <tr *ngFor="let i of selectedSeats">
                           <td>{{ i }}</td>
-                          <td>{{ trip.price | currency: "USD" }}</td>
+                          <td>{{ trip.price | currency : "USD" }}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -132,7 +132,7 @@
                 <div class="row total">
                   <h4>
                     Total :
-                    {{ selectedSeats.length * trip.price | currency: "USD" }}
+                    {{ selectedSeats.length * trip.price | currency : "USD" }}
                   </h4>
                 </div>
                 <div class="row justify-content-center">
