@@ -36,15 +36,27 @@ public class TripController {
 		this.tripService = tripService;
 	}
 
-	@GetMapping
-	public ResponseEntity<List<TripDTO>> getTrips() {
+	@GetMapping("/all")
+	//PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<List<TripDTO>> getAllTrips() {
 		List<TripDTO> trips = tripService.getAllTrips();
 		if(trips.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(trips,HttpStatus.OK);
 	}
-	
+
+
+	@GetMapping
+	public ResponseEntity<List<TripDTO>> getAvailableTrips() {
+		List<TripDTO> trips = tripService.getAvailableTrips();
+		if(trips.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(trips,HttpStatus.OK);
+	}
+
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getTripById(@PathVariable("id") long id) {
 		try{
@@ -57,14 +69,14 @@ public class TripController {
 	
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<String> addTrip(@RequestBody TripDTO tripDTO){
-		tripService.addTrip(tripDTO);
+	public ResponseEntity<String> addTrip(@RequestBody Trip trip){
+		tripService.addTrip(trip);
 		return new ResponseEntity<>("Trip successfully added",HttpStatus.CREATED);
 	}
 	
 	 @PutMapping("/{id}")
 	 @PreAuthorize("hasRole('ADMIN')")
-	  public ResponseEntity<?> updateTrip(@PathVariable("id") long id, @RequestBody TripDTO trip) {
+	  public ResponseEntity<?> updateTrip(@PathVariable("id") long id, @RequestBody Trip trip) {
 	    try {
 			tripService.updateTrip(id,trip);
 	        return new ResponseEntity<>("Trip successfully updated", HttpStatus.OK);
@@ -84,11 +96,10 @@ public class TripController {
 	 public ResponseEntity<List<TripDTO>> searchTrips(
 			 @RequestParam("departureCity") String departureCity,
 			 @RequestParam("destinationCity") String destinationCity,
-			 @RequestParam("date") String date,
-			 Pageable pageable){
+			 @RequestParam("date") String date){
 
 		 Date d = Date.valueOf(date);		
-		 return new ResponseEntity<>(tripService.searchTrips(departureCity,destinationCity, d, pageable), HttpStatus.OK);
+		 return new ResponseEntity<>(tripService.searchTrips(departureCity,destinationCity, d), HttpStatus.OK);
 	 }
 
 }

@@ -24,6 +24,6 @@ public class TripDTO {
     private Time departureTime;
     private Time destinationTime;
     private double price;
-    private Boolean isAvailable;
     private List<Integer> availableSeats;
+    private String status;
 }

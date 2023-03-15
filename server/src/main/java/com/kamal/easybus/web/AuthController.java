@@ -1,5 +1,6 @@
 package com.kamal.easybus.web;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import com.kamal.easybus.dtos.LoginRequestDTO;
@@ -10,6 +11,7 @@ import com.kamal.easybus.exceptions.BadRequestException;
 import com.kamal.easybus.security.UserPrincipal;
 import com.kamal.easybus.security.jwt.JwtTokenProvider;
 import com.kamal.easybus.services.AuthService;
+import com.kamal.easybus.services.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +35,14 @@ import java.util.Set;
 public class AuthController {
 
     AuthService authService;
+    MailService mailService;
+
 
 
     @Autowired
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, MailService mailService) {
         this.authService = authService;
+        this.mailService = mailService;
     }
 
     @PostMapping("/login")
@@ -60,6 +65,7 @@ public class AuthController {
             Authentication authentication = authService.register(signUpRequest);
             String jwt = authService.generateToken(authentication);
             UserPrincipal userDetails = authService.getUserDetails(authentication);
+            //mailService.sendWelcomeEmail(userDetails.getEmail());
             return ResponseEntity.ok(new LoginResponseDTO(
                     userDetails.getFirstName(),
                     userDetails.getLastName(),
@@ -67,9 +73,13 @@ public class AuthController {
                     userDetails.getPhone(),
                     jwt
             ));
-        }catch (BadRequestException e){
+        } catch (BadRequestException e) {
             return new ResponseEntity<>("Email Address already in use!",
                     HttpStatus.BAD_REQUEST);
-        }
+        }/* catch (MessagingException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Error while sending email",
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }*/
     }
 }

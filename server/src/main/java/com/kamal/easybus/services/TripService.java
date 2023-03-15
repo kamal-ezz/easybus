@@ -36,30 +36,30 @@ public class TripService {
         return tripRepo.findAll().stream().map(this::mapTripToTripDTO).collect(Collectors.toList());
     }
 
+    public List<TripDTO> getAvailableTrips(){
+        return tripRepo.getAvailableTrips();
+    }
+
     public TripDTO getTripById(long id) {
         return mapTripToTripDTO(tripRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Trip", "id", id)));
     }
 
-    public void addTrip(TripDTO tripDTO) {
-        List<Seat> seats = tripDTO.getAvailableSeats().stream().map(Seat::new).collect(Collectors.toList());
-        seatRepo.saveAll(seats);
-        tripRepo.save(mapTripDTOToTrip(tripDTO));
+    public void addTrip(Trip trip) {
+        tripRepo.save(trip);
     }
 
-    public void updateTrip(long id, TripDTO tripDTO) {
-        Trip _trip = tripRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trip", "id", id));
-        Trip newTrip = mapTripDTOToTrip(tripDTO);
-        _trip.setBus(newTrip.getBus());
-        _trip.setDepartureCity(newTrip.getDepartureCity());
-        _trip.setDestinationCity(newTrip.getDestinationCity());
-        _trip.setDate(newTrip.getDate());
-        _trip.setDepartureTime(newTrip.getDepartureTime());
-        _trip.setDestinationTime(newTrip.getDestinationTime());
-        _trip.setPrice(newTrip.getPrice());
-        _trip.setAvailableSeats(newTrip.getAvailableSeats());
-        _trip.setIsAvailable(newTrip.getIsAvailable());
-        tripRepo.save(_trip);
+    public void updateTrip(long id, Trip newTrip) {
+        Trip trip = tripRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trip", "id", id));
+        trip.setBus(newTrip.getBus());
+        trip.setDepartureCity(newTrip.getDepartureCity());
+        trip.setDestinationCity(newTrip.getDestinationCity());
+        trip.setDate(newTrip.getDate());
+        trip.setDepartureTime(newTrip.getDepartureTime());
+        trip.setDestinationTime(newTrip.getDestinationTime());
+        trip.setPrice(newTrip.getPrice());
+        trip.setAvailableSeats(newTrip.getAvailableSeats());
+        tripRepo.save(trip);
     }
 
     public void deleteTrip(long id) {
@@ -71,10 +71,19 @@ public class TripService {
 
     public List<TripDTO> searchTrips(String departureCity,
                                   String arrivalCity,
-                                  Date date,
-                                  Pageable pageable) {
+                                  Date date) {
         //return tripRepo.findByDepartureCityAndDestinationCityAndDate(departureCity,arrivalCity, date, pageable);
         return tripRepo.findTrips(departureCity, arrivalCity, date).stream().map(this::mapTripToTripDTO).collect(Collectors.toList());
+    }
+
+    public void addSeat(Seat seat, Trip trip){
+        seat.setTrip(trip);
+        seatRepo.save(seat);
+    }
+
+    public void addSeats(List<Seat> seats, Trip trip){
+        seats.forEach(seat -> seat.setTrip(trip));
+        seatRepo.saveAll(seats);
     }
 
     public TripDTO mapTripToTripDTO(Trip trip) {
@@ -87,13 +96,12 @@ public class TripService {
                 .departureTime(trip.getDepartureTime())
                 .destinationTime(trip.getDestinationTime())
                 .price(trip.getPrice())
-                .isAvailable(trip.getIsAvailable())
                 .availableSeats(trip.getAvailableSeats().stream().map(Seat::getNumber).collect(Collectors.toList()))
                 .build();
     }
 
 
-	public Trip mapTripDTOToTrip(TripDTO tripDTO){
+	/*public Trip mapTripDTOToTrip(TripDTO tripDTO){
 		Bus bus = busRepo.findByCompany(tripDTO.getBusCompany())
                 .orElseThrow(() -> new ResourceNotFoundException("Trip", "company", tripDTO.getBusCompany()));
         List<Seat> seats = tripDTO.getAvailableSeats().stream().map(
@@ -110,8 +118,7 @@ public class TripService {
 				.departureTime(tripDTO.getDepartureTime())
 				.destinationTime(tripDTO.getDestinationTime())
 				.price(tripDTO.getPrice())
-				.isAvailable(tripDTO.getIsAvailable())
 				.availableSeats(seats)
 				.build();
-	}
+	}*/
 }

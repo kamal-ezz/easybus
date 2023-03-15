@@ -27,11 +27,9 @@ public class Trip {
 	private Time departureTime;
 	private Time destinationTime;
 	private double price;
-	private Boolean isAvailable;
 	@OneToMany(mappedBy = "trip")
 	private List<Seat> availableSeats;
 	@OneToMany(mappedBy = "trip")
 	private List<Reservation> reservations;
-
 	private Status status;
 }

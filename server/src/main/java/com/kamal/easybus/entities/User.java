@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 
-
 @Data
 @NoArgsConstructor
 @Entity
@@ -41,7 +40,7 @@ public class User{
 	private String phone;
 	@Transient
     private Set<Role> roles;
-
+	private boolean enabled;
 	
 	public User(String firstName, String lastName, String email,String password, String phone) {
 		this.firstName = firstName;

@@ -12,6 +12,17 @@ spring:
   security:
     user:
       password: jjjj
+  mail:
+    host: gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 app:
   jwtSecret: JWTSuperSecretKey

@@ -1,8 +1,6 @@
 package com.kamal.easybus.services;
 
-import com.kamal.easybus.dtos.BusDTO;
 import com.kamal.easybus.entities.Bus;
-import com.kamal.easybus.enums.Equipment;
 import com.kamal.easybus.exceptions.ResourceNotFoundException;
 import com.kamal.easybus.repos.BusRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,38 +21,21 @@ public class BusService {
     }
 
 
-    public void addBus(BusDTO bus){
-        busRepo.save(mapBusDTOToBus(bus));
+    public void addBus(Bus bus){
+        busRepo.save(bus);
     }
 
-    public void updateBus(Long id, BusDTO bus){
+    public void updateBus(Long id, Bus newBus){
         Bus _bus = busRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Bus", "id", id));
-        _bus.setCompany(bus.getCompany());
-        _bus.setLogo(bus.getLogo());
-        _bus.setEquipments(bus.getEquipments());
+        _bus.setCompany(newBus.getCompany());
+        _bus.setLogo(newBus.getLogo());
+        _bus.setEquipments(newBus.getEquipments());
         busRepo.save(_bus);
     }
 
     public void deleteBus(Long id){
         Bus bus = busRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Bus", "id", id));
         busRepo.delete(bus);
-    }
-
-    public void addEquipment(Long id, Equipment equipments){
-        Bus bus = busRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Bus", "id", id));
-    }
-
-    public Bus mapBusDTOToBus(BusDTO busDTO){
-
-        /*busDTO.getEquipments().forEach(e -> {
-            equipmentRepo.save(e);
-        });*/
-
-        return Bus.builder()
-                .company(busDTO.getCompany())
-                .logo(busDTO.getLogo())
-                .equipments(busDTO.getEquipments())
-                .build();
     }
 
 

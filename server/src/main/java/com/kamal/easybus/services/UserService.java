@@ -30,7 +30,7 @@ public class UserService {
     }
 
 
-    public User mapUserDTOToUser(UserDTO userDTO, String password){
+    /*public User mapUserDTOToUser(UserDTO userDTO, String password){
         return User.builder()
                 .firstName(userDTO.getFirstName())
                 .lastName(userDTO.getLastName())
@@ -39,7 +39,7 @@ public class UserService {
                 .email(userDTO.getEmail())
                 .phone(userDTO.getPhone())
                 .build();
-    }
+    }*/
 
     public List<UserDTO> getAllUsers() {
         return userRepo.findAll().stream().map(this::mapUserToUserDTO).collect(Collectors.toList());

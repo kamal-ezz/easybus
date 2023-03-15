@@ -1,8 +1,8 @@
 package com.kamal.easybus;
 
-import com.kamal.easybus.dtos.BusDTO;
-import com.kamal.easybus.dtos.TripDTO;
-import com.kamal.easybus.dtos.UserDTO;
+import com.kamal.easybus.entities.Bus;
+import com.kamal.easybus.entities.Seat;
+import com.kamal.easybus.entities.Trip;
 import com.kamal.easybus.entities.User;
 import com.kamal.easybus.enums.Equipment;
 import com.kamal.easybus.enums.Role;
@@ -28,7 +28,6 @@ public class Seeder {
     TripService tripService;
     UserService userService;
 
-
     @Autowired
     public Seeder(BusService busService, TripService tripService, UserService userService) {
         this.busService = busService;
@@ -43,7 +42,7 @@ public class Seeder {
                 Equipment.TV,
                 Equipment.HIGHWAY);
 
-        BusDTO globus = BusDTO.builder()
+        Bus globus = Bus.builder()
                 .company("Globus")
                 .logo("")
                 .equipments(globusEquipment)
@@ -58,7 +57,7 @@ public class Seeder {
                 Equipment.PHARMACY_BOX,
                 Equipment.USB_CHARGER);
 
-        BusDTO ghazala = BusDTO.builder()
+        Bus ghazala = Bus.builder()
                 .company("Ghazala")
                 .logo("")
                 .equipments(ghazalaEquipment)
@@ -66,49 +65,52 @@ public class Seeder {
         busService.addBus(ghazala);
 
         //Trips
-        TripDTO trip1 = TripDTO.builder()
-                .busCompany(globus.getCompany())
-                .busLogo(globus.getLogo())
-                .busEquipments(globusEquipment)
+
+        Seat seat1 = new Seat(10);
+        Seat seat2 = new Seat(11);
+
+        Seat seat3 = new Seat(10);
+        Seat seat4 = new Seat(11);
+
+
+        Trip trip1 = Trip.builder()
+                .bus(globus)
                 .date(Date.valueOf(LocalDate.now()))
                 .departureCity("Casablanca")
                 .destinationCity("Marrakech")
                 .departureTime(Time.valueOf("10:00:00"))
                 .destinationTime(Time.valueOf("14:15:00"))
-                .isAvailable(true)
-                .availableSeats(List.of(10,11))
+                .availableSeats(List.of(seat1,seat2))
                 .price(100)
                 .build();
 
         tripService.addTrip(trip1);
 
-        TripDTO trip2 = TripDTO.builder()
-                .busCompany(ghazala.getCompany())
-                .busLogo(ghazala.getLogo())
-                .busEquipments(ghazalaEquipment)
+        Trip trip2 = Trip.builder()
+                .bus(ghazala)
                 .date(Date.valueOf(LocalDate.now()))
                 .departureCity("Casablanca")
                 .destinationCity("Marrakech")
                 .departureTime(Time.valueOf("15:00:00"))
                 .destinationTime(Time.valueOf("19:00:00"))
-                .isAvailable(true)
-                .availableSeats(List.of(10,11))
+                .availableSeats(List.of(seat3,seat4))
                 .price(100)
                 .build();
 
         tripService.addTrip(trip2);
 
-        //Users
-        //User adminUser = new User("Kamal","Ezzarmou","kamal@admin.com",(new BCryptPasswordEncoder()).encode("admin00"),"000");
+        tripService.addSeats(List.of(seat1,seat2), trip1);
+        tripService.addSeats(List.of(seat3,seat4), trip2);
 
-        UserDTO adminUserDTO = UserDTO.builder()
+
+        User adminUser = User.builder()
                 .firstName("Kamal")
                 .lastName("Ezzarmou")
                 .email("kamal@admin.com")
+                .password((new BCryptPasswordEncoder()).encode("admin00"))
                 .phone("000")
                 .build();
 
-        User adminUser = userService.mapUserDTOToUser(adminUserDTO, (new BCryptPasswordEncoder()).encode("admin00"));
         Set<Role> roles = new HashSet<>();
         Role adminRole = Role.ADMIN;
         roles.add(adminRole);

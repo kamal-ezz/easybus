@@ -86,7 +86,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                         .permitAll()
-                    .antMatchers("/api/v1/auth/**", "/api/v1/paypal/**", "/actuator/**")
+                .antMatchers("/api/v2/api-docs/**", "/swagger-ui/**")
+                        .permitAll()
+                .antMatchers("/api/v1/auth/**", "/api/v1/paypal/**", "/actuator/**")
                         .permitAll()
                     .antMatchers(HttpMethod.GET, "/api/v1/trips/**", "/api/v1/users/**")
                         .permitAll()
