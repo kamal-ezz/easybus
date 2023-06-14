@@ -1,14 +1,11 @@
 package com.kamal.easybus;
 
-import com.kamal.easybus.entities.Bus;
-import com.kamal.easybus.entities.Seat;
-import com.kamal.easybus.entities.Trip;
-import com.kamal.easybus.entities.User;
+import com.kamal.easybus.entities.*;
 import com.kamal.easybus.enums.Equipment;
-import com.kamal.easybus.enums.Role;
+import com.kamal.easybus.repos.AdminRepo;
+import com.kamal.easybus.repos.CityRepo;
 import com.kamal.easybus.services.BusService;
 import com.kamal.easybus.services.TripService;
-import com.kamal.easybus.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -24,18 +21,24 @@ import java.util.Set;
 @Component
 public class Seeder {
 
-    BusService busService;
-    TripService tripService;
-    UserService userService;
+    private BusService busService;
+    private TripService tripService;
+    private AdminRepo adminRepo;
+    private CityRepo cityRepo;
 
     @Autowired
-    public Seeder(BusService busService, TripService tripService, UserService userService) {
+    public Seeder(BusService busService, TripService tripService, AdminRepo adminRepo, CityRepo cityRepo) {
         this.busService = busService;
         this.tripService = tripService;
-        this.userService = userService;
+        this.adminRepo = adminRepo;
+        this.cityRepo = cityRepo;
     }
 
     public void seed(){
+
+        //Cities
+        cityRepo.saveAll(List.of(new City("Marrakech"), new City("Casablanca"), new City("Rabat")));
+
         //Buses
         List<Equipment> globusEquipment = Arrays.asList(Equipment.AIR_CONDITIONER,
                 Equipment.LAMP,
@@ -72,7 +75,6 @@ public class Seeder {
         Seat seat3 = new Seat(10);
         Seat seat4 = new Seat(11);
 
-
         Trip trip1 = Trip.builder()
                 .bus(globus)
                 .date(Date.valueOf(LocalDate.now()))
@@ -103,20 +105,14 @@ public class Seeder {
         tripService.addSeats(List.of(seat3,seat4), trip2);
 
 
-        User adminUser = User.builder()
-                .firstName("Kamal")
-                .lastName("Ezzarmou")
+        Admin adminUser = Admin.builder()
+                .fullName("Kamal Ezzarmou")
                 .email("kamal@admin.com")
                 .password((new BCryptPasswordEncoder()).encode("admin00"))
-                .phone("000")
                 .build();
 
-        Set<Role> roles = new HashSet<>();
-        Role adminRole = Role.ADMIN;
-        roles.add(adminRole);
-        adminUser.setRoles(roles);
-        userService.addUser(adminUser);
-    }
+        adminRepo.save(adminUser);
 
+    }
 
 }

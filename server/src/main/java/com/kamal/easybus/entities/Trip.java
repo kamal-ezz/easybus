@@ -2,12 +2,10 @@ package com.kamal.easybus.entities;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
 
-import com.kamal.easybus.enums.Status;
 import lombok.*;
 
 @Data
@@ -31,5 +29,5 @@ public class Trip {
 	private List<Seat> availableSeats;
 	@OneToMany(mappedBy = "trip")
 	private List<Reservation> reservations;
-	private Status status;
+
 }

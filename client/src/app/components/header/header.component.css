@@ -6,17 +6,3 @@ a {
 nav {
   height: 60px;
 }
-
-.dropdown {
-  display: none;
-}
-
-@media screen and (max-width: 700px) {
-  .navbar-nav {
-    display: none;
-  }
-
-  .dropdown {
-    display: block;
-  }
-}

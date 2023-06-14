@@ -10,7 +10,7 @@ import { TripService } from 'src/app/services/trip.service';
 })
 export class TripsComponent implements OnInit {
   trips: Trip[] = [];
-  price: number = 60;
+  maxPrice: number = 100;
   departureTimes: string[] = ['morning', 'afternoon', 'evening'];
   equipments: string[] = [];
 
@@ -57,7 +57,7 @@ export class TripsComponent implements OnInit {
     return duration;
   }
 
-  period(trip: Trip): string {
+  period(trip: Trip) {
     const departureTimeHour = parseInt(trip.departureTime.substring(0, 2));
 
     if (0 <= departureTimeHour && departureTimeHour <= 11) return 'morning';
@@ -68,7 +68,7 @@ export class TripsComponent implements OnInit {
     else return '';
   }
 
-  changeDepartureTimes(event: any): void {
+  changeDepartureTimes(event: any) {
     const item = event.target.value;
     if (event.target.checked) {
       this.departureTimes.push(item);
@@ -81,7 +81,7 @@ export class TripsComponent implements OnInit {
     console.log(this.departureTimes); // to see the checkedItems array in console
   }
 
-  changeEquipments(event: any): void {
+  changeEquipments(event: any) {
     const item = event.target.value;
     if (event.target.checked) {
       this.equipments.push(item);
@@ -94,7 +94,7 @@ export class TripsComponent implements OnInit {
     console.log(this.equipments); // to see the checkedItems array in console
   }
 
-  hasAll(equipments: string[]): boolean {
+  hasAll(equipments: string[]) {
     return this.equipments.every((e) => equipments.includes(e.toUpperCase()));
   }
 }

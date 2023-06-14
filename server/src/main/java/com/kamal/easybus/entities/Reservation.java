@@ -26,4 +26,6 @@ public class Reservation {
 	private String email;
 	private String phone;
 	private PaymentMethod paymentMethod;
+
+	private Status status;
 }

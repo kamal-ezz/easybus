@@ -25,5 +25,4 @@ public class TripDTO {
     private Time destinationTime;
     private double price;
     private List<Integer> availableSeats;
-    private String status;
 }

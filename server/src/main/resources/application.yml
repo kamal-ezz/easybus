@@ -12,17 +12,17 @@ spring:
   security:
     user:
       password: jjjj
-  mail:
-    host: gmail.com
-    port: 587
-    username:
-    password:
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+  #mail:
+  #  host: smtp.googlemail.com
+  #  port: 587
+  #  username: kamal.ezzarmou1@gmail.com
+  #  password:
+  #  properties:
+  #    mail:
+  #      smtp:
+  #        auth: true
+  #        starttls:
+  #          enable: true
 
 app:
   jwtSecret: JWTSuperSecretKey
@@ -43,5 +43,12 @@ management:
         include: "*"
 
 paypal:
-  clientId: AZhgu21wrutKMxvWQNyEDvYym9sf-W3Pn9BWQQeop-JE8s-u9Gw21AkW6wHLXNXEAMzEvyEpt7bfRqoy
-  clientSecret: EEHyiMhB29HbRokijhrO9YrVsyvOhodyhwsDU_mXx3cMHK_ILHIPr5vGsK_iOZCfjdBeiX6hBLwKz3-S
+  clientId:
+  clientSecret:
+
+#swagger config
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs

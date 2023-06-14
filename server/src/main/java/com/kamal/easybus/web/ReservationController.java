@@ -19,19 +19,4 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @PostMapping(value = "/{id}")
-    public Map<String, Object> reserveTrip(@RequestParam("sum") String sum, @PathVariable("id") Long id){
-        return reservationService.createPayment(sum);
-    }
-
-    @PostMapping(value = "/accept/{id}")
-    public Map<String, Object> acceptReservation(HttpServletRequest request, @PathVariable("id") Long id){
-        reservationService.acceptReservation(id);
-        return reservationService.completePayment(request);
-    }
-
-    @PostMapping("/cancel/{id}")
-    public ResponseEntity<?> cancelReservation(@PathVariable String id){
-        return null;
-    }
 }

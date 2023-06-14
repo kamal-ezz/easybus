@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.util.List;
 
 import com.kamal.easybus.dtos.TripDTO;
+import com.kamal.easybus.entities.City;
 import com.kamal.easybus.exceptions.ResourceNotFoundException;
+import com.kamal.easybus.repos.CityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,30 +32,28 @@ import com.kamal.easybus.services.TripService;
 public class TripController {
 
 	private TripService tripService;
+	private CityRepo cityRepo;
 
 	@Autowired
-	public TripController(TripService tripService) {
+	public TripController(TripService tripService, CityRepo cityRepo) {
 		this.tripService = tripService;
+		this.cityRepo = cityRepo;
 	}
 
 	@GetMapping("/all")
-	//PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<TripDTO>> getAllTrips() {
-		List<TripDTO> trips = tripService.getAllTrips();
-		if(trips.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<>(trips,HttpStatus.OK);
+		return new ResponseEntity<>(tripService.getAllTrips(),HttpStatus.OK);
+	}
+
+	@GetMapping("/cities/all")
+	public ResponseEntity<List<City>> getCities() {
+		return new ResponseEntity<>(cityRepo.findAll(),HttpStatus.OK);
 	}
 
 
 	@GetMapping
 	public ResponseEntity<List<TripDTO>> getAvailableTrips() {
-		List<TripDTO> trips = tripService.getAvailableTrips();
-		if(trips.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<>(trips,HttpStatus.OK);
+		return new ResponseEntity<>(tripService.getAvailableTrips(),HttpStatus.OK);
 	}
 
 
@@ -68,14 +68,12 @@ public class TripController {
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<String> addTrip(@RequestBody Trip trip){
 		tripService.addTrip(trip);
 		return new ResponseEntity<>("Trip successfully added",HttpStatus.CREATED);
 	}
 	
 	 @PutMapping("/{id}")
-	 @PreAuthorize("hasRole('ADMIN')")
 	  public ResponseEntity<?> updateTrip(@PathVariable("id") long id, @RequestBody Trip trip) {
 	    try {
 			tripService.updateTrip(id,trip);
@@ -86,7 +84,6 @@ public class TripController {
 	  }
 	
 	 @DeleteMapping("/{id}")
-	 @PreAuthorize("hasRole('ADMIN')")
 	 public ResponseEntity<?> deleteTrip(@PathVariable("id") long id) {
 		tripService.deleteTrip(id);
 		return new ResponseEntity<>("Trip successfully deleted", HttpStatus.OK);

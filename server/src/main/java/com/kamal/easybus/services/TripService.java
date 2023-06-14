@@ -5,19 +5,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.kamal.easybus.dtos.TripDTO;
-import com.kamal.easybus.entities.Bus;
 import com.kamal.easybus.entities.Seat;
 import com.kamal.easybus.exceptions.ResourceNotFoundException;
 import com.kamal.easybus.repos.BusRepo;
 import com.kamal.easybus.repos.SeatRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.kamal.easybus.entities.Trip;
 import com.kamal.easybus.repos.TripRepo;
-
 
 @Service
 public class TripService {

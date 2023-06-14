@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { City } from 'src/app/models/city.model';
+import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +12,14 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   tripInfo!: FormGroup;
   submitted: boolean = false;
-  departureCities: string[] = ['Marrakech', 'Casablanca', 'Rabat'];
-  destinationCities: string[] = ['Marrakech', 'Casablanca', 'Rabat'];
+  cities: City[] = [];
   todayDate = new Date().toJSON().slice(0, 10);
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private tripService: TripService
+  ) {}
 
   ngOnInit(): void {
     this.tripInfo = this.formBuilder.group({
@@ -22,6 +27,8 @@ export class HomeComponent implements OnInit {
       destination: ['', Validators.required],
       date: ['', Validators.required],
     });
+
+    this.tripService.getCities().subscribe((data) => (this.cities = data));
   }
 
   get departure() {
@@ -35,10 +42,6 @@ export class HomeComponent implements OnInit {
   get date() {
     return this.tripInfo.get('date');
   }
-
-  /*excludeDepartureCity(departureCities: string[]) {
-    return departureCities.filter((i) => i != this.departure?.value);
-  }*/
 
   onSubmit() {
     this.submitted = true;

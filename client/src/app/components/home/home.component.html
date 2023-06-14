@@ -2,10 +2,6 @@
   <h2 class="hero-title">Buy your bus tickets at the best price!</h2>
   <div class="search">
     <form [formGroup]="tripInfo" (ngSubmit)="onSubmit()">
-      <!-- <div *ngIf="submitted && destination?.errors" class="alert alert-danger">
-        Source and destination can not be same.
-      </div> -->
-
       <div
         *ngIf="submitted && destination == departure"
         class="alert alert-danger"
@@ -22,8 +18,8 @@
             name="departure"
             formControlName="departure"
           >
-            <option *ngFor="let city of departureCities" [value]="city">
-              {{ city }}
+            <option *ngFor="let city of cities" [value]="city.name">
+              {{ city.name }}
             </option>
           </select>
           <div
@@ -45,8 +41,8 @@
             name="destination"
             formControlName="destination"
           >
-            <option *ngFor="let city of destinationCities" [value]="city">
-              {{ city }}
+            <option *ngFor="let city of cities" [value]="city.name">
+              {{ city.name }}
             </option>
           </select>
           <div
