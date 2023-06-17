@@ -1,0 +1,9 @@
+<div class="ms-5">
+  <button class="btn btn-primary ms-auto" routerLink="/admin/add-trip">
+    Add a trip
+  </button>
+
+  <div *ngFor="let trip of trips">
+    <app-trip [trip]="trip"></app-trip>
+  </div>
+</div>

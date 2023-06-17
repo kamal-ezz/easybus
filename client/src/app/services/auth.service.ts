@@ -29,12 +29,6 @@ export class AuthService {
     );
   }
 
-  register(user: User) {
-    return this.http.post(
-      environment.apiUrl + '/api/v1/auth/register', user, httpOptions
-    );
-  }
-
   logout() {
     this.token = null;
     //this.loggedInUsername = null;
@@ -68,7 +62,7 @@ export class AuthService {
   isLoggedIn() {
     const token = localStorage.getItem('token');
     if (!token) return false;
-    const isExpired = (new JwtHelperService()).isTokenExpired(token);
+    const isExpired = new JwtHelperService().isTokenExpired(token);
     if (!isExpired) return true;
     return false;
   }

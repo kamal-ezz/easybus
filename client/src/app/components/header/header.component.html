@@ -1,5 +1,7 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg mb-5">
   <div class="container-fluid">
     <a class="ms-3 navbar-brand logo" routerLink="/">Easybus</a>
+    <span class="fs-5" *ngIf="logged">Backoffice Account</span>
+    <button class="btn" *ngIf="logged" onclick="logout()">Logout</button>
   </div>
 </nav>

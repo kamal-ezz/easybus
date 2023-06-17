@@ -20,5 +20,5 @@ public interface TripRepo extends JpaRepository<Trip, Long> {
 						 String destinationCity, Date date);
 
 	@Query("select t from Trip t where t.availableSeats.size > 0")
-	List<TripDTO> getAvailableTrips();
+	List<Trip> getAvailableTrips();
 }

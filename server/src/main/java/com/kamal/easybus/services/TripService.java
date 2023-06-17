@@ -33,7 +33,7 @@ public class TripService {
     }
 
     public List<TripDTO> getAvailableTrips(){
-        return tripRepo.getAvailableTrips();
+        return tripRepo.getAvailableTrips().stream().map(this::mapTripToTripDTO).collect(Collectors.toList());
     }
 
     public TripDTO getTripById(long id) {

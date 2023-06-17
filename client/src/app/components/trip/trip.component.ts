@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Trip } from 'src/app/models/trip.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { TripService } from 'src/app/services/trip.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class TripComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private tripService: TripService
+    private tripService: TripService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -61,6 +63,10 @@ export class TripComponent implements OnInit {
 
   get seats() {
     return this.form.get('seats') as FormArray;
+  }
+
+  logged() {
+    return this.authService.isLoggedIn();
   }
 
   submit() {

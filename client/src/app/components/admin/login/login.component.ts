@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
         const user = data as User;
         this.authService.saveToken(user.token || '');
         this.authService.addUserToLocalCache(user);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/admin');
       },
       error: (err) => {
         this.form.setErrors({

@@ -13,7 +13,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ProfileComponent } from './components/profile/profile.component';
 import { ChooseSeatComponent } from './components/choose-seat/choose-seat.component';
 import { ContactInfoComponent } from './components/contact-info/contact-info.component';
 import { ReservationSummaryComponent } from './components/reservation-summary/reservation-summary.component';
@@ -22,6 +21,10 @@ import { AddTripComponent } from './components/admin/add-trip/add-trip.component
 import { AddBusComponent } from './components/admin/add-bus/add-bus.component';
 import { ReservationsComponent } from './components/admin/reservations/reservations.component';
 import { SidebarComponent } from './components/admin/sidebar/sidebar.component';
+import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
+import { DashboardTripsComponent } from './components/admin/dashboard-trips/dashboard-trips.component';
+import { DashboardBusesComponent } from './components/admin/dashboard-buses/dashboard-buses.component';
+import { DashboardReservationsComponent } from './components/admin/dashboard-reservations/dashboard-reservations.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,6 @@ import { SidebarComponent } from './components/admin/sidebar/sidebar.component';
     HomeComponent,
     NotFoundComponent,
     FooterComponent,
-    ProfileComponent,
     ChooseSeatComponent,
     ContactInfoComponent,
     ReservationSummaryComponent,
@@ -42,6 +44,10 @@ import { SidebarComponent } from './components/admin/sidebar/sidebar.component';
     AddBusComponent,
     ReservationsComponent,
     SidebarComponent,
+    AdminHomeComponent,
+    DashboardTripsComponent,
+    DashboardBusesComponent,
+    DashboardReservationsComponent,
   ],
   imports: [
     BrowserModule,
