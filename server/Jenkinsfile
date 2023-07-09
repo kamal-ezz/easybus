@@ -10,6 +10,12 @@ pipeline {
 
   stages {
     stage('Build Maven project') {
+    agent {
+        docker {
+             image 'maven:3.9.3-eclipse-temurin-17'
+             args '-v $HOME/.m2:/root/.m2'
+        }
+    }
       steps {
         sh '../docker-compose run -d --name easybus-db db'
         sh 'mvn clean package -DskipTests'
@@ -26,5 +32,7 @@ pipeline {
         }
       }
     }
+
+
   }
 }
