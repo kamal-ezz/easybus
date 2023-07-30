@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class TripDTO {
+    private Long id;
     private String busCompany;
     private String busLogo;
     private List<Equipment> busEquipments;

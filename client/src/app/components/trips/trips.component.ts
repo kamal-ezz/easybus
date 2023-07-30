@@ -28,8 +28,7 @@ export class TripsComponent implements OnInit {
     if (departure && destination && date) {
       this.tripService.searchTrips(departure, destination, date).subscribe({
         next: (data) => {
-          this.trips = (data as any).content;
-          console.log(this.trips);
+          this.trips = data as any;
           this.trips.map(
             (trip) =>
               (trip.duration = this.calculateDuration(

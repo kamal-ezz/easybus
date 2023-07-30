@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class EasybusApplication implements CommandLineRunner {
 
-	Seeder seeder;
+	private final Seeder seeder;
 
 	@Autowired
 	public EasybusApplication(Seeder seeder) {

@@ -5,6 +5,8 @@ import com.kamal.easybus.repos.AdminRepo;
 import com.kamal.easybus.security.UserPrincipal;
 import com.kamal.easybus.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -46,5 +48,10 @@ public class AuthService {
 
     public UserPrincipal getUserDetails(Authentication authentication){
         return (UserPrincipal) authentication.getPrincipal();
+    }
+
+    public Boolean isLoggedIn() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 }

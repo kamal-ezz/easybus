@@ -17,6 +17,7 @@ export class TripComponent implements OnInit {
   form!: FormGroup;
   selectedSeats: number[] = [];
   submitted: boolean = false;
+  isLoggedIn: boolean = false;
   //showSeats = true;
 
   constructor(
@@ -36,7 +37,7 @@ export class TripComponent implements OnInit {
       seats: new FormArray([]),
     });
 
-    this.tripService.getTripById(+this.trip.id).subscribe({
+    this.tripService.getTripById(this.trip.id).subscribe({
       next: (data) => {
         this.trip = data;
         console.log(this.trip);
@@ -55,6 +56,8 @@ export class TripComponent implements OnInit {
         }
       });
     }
+
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   /*toggleSeats() {
@@ -63,10 +66,6 @@ export class TripComponent implements OnInit {
 
   get seats() {
     return this.form.get('seats') as FormArray;
-  }
-
-  logged() {
-    return this.authService.isLoggedIn();
   }
 
   submit() {

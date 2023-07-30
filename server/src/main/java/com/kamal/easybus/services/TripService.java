@@ -84,6 +84,7 @@ public class TripService {
 
     public TripDTO mapTripToTripDTO(Trip trip) {
         return TripDTO.builder()
+                .id(trip.getId())
                 .busCompany(trip.getBus().getCompany())
                 .busLogo(trip.getBus().getLogo())
                 .departureCity(trip.getDepartureCity())
