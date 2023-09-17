@@ -25,6 +25,7 @@ import { AdminHomeComponent } from './components/admin/admin-home/admin-home.com
 import { DashboardTripsComponent } from './components/admin/dashboard-trips/dashboard-trips.component';
 import { DashboardBusesComponent } from './components/admin/dashboard-buses/dashboard-buses.component';
 import { DashboardReservationsComponent } from './components/admin/dashboard-reservations/dashboard-reservations.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { DashboardReservationsComponent } from './components/admin/dashboard-res
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Trip } from 'src/app/models/trip.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,7 +14,7 @@ export class TripComponent implements OnInit {
   @Input()
   trip!: Trip;
   seatStatus: boolean[] = new Array(36).fill(false);
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   selectedSeats: number[] = [];
   submitted: boolean = false;
   isLoggedIn: boolean = false;
@@ -33,8 +33,8 @@ export class TripComponent implements OnInit {
       this.tripId = this.route.snapshot.paramMap.get('id');
     }*/
 
-    this.form = new FormGroup({
-      seats: new FormArray([]),
+    this.form = new UntypedFormGroup({
+      seats: new UntypedFormArray([]),
     });
 
     this.tripService.getTripById(this.trip.id).subscribe({
@@ -45,7 +45,7 @@ export class TripComponent implements OnInit {
     });
 
     this.seatStatus.forEach(() => {
-      this.seats.push(new FormControl(false));
+      this.seats.push(new UntypedFormControl(false));
     });
 
     if (this.seats) {
@@ -65,7 +65,7 @@ export class TripComponent implements OnInit {
   }*/
 
   get seats() {
-    return this.form.get('seats') as FormArray;
+    return this.form.get('seats') as UntypedFormArray;
   }
 
   submit() {
