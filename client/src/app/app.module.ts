@@ -13,7 +13,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ChooseSeatComponent } from './components/choose-seat/choose-seat.component';
 import { ContactInfoComponent } from './components/contact-info/contact-info.component';
 import { ReservationSummaryComponent } from './components/reservation-summary/reservation-summary.component';
 import { TicketComponent } from './components/ticket/ticket.component';
@@ -37,7 +36,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     NotFoundComponent,
     FooterComponent,
-    ChooseSeatComponent,
     ContactInfoComponent,
     ReservationSummaryComponent,
     TicketComponent,

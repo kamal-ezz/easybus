@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import {
+  UntypedFormArray,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Trip } from 'src/app/models/trip.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { TripService } from 'src/app/services/trip.service';
@@ -24,7 +29,8 @@ export class TripComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private tripService: TripService,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -71,9 +77,22 @@ export class TripComponent implements OnInit {
   submit() {
     console.log(this.form);
     this.submitted = true;
-    if (this.selectedSeats.length) {
-      let price: number = this.trip.price * this.selectedSeats.length;
-      this.router.navigate(['passengerInfo']);
-    } else return;
+
+    if (this.selectedSeats.length === 0) {
+      return; // Don't proceed if no seats are selected
+    }
+
+    const totalPrice = this.trip.price * this.selectedSeats.length;
+    this.modalService.dismissAll();
+    this.router.navigate(['contact-info'], {
+      queryParams: { totalPrice: totalPrice },
+    });
+  }
+
+  openModal(content: any) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+    });
   }
 }
