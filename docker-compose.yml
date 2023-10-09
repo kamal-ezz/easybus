@@ -1,16 +1,17 @@
-version: '3.3'
+version: "3.3"
 
 services:
-
-  #server:
-  #  depends_on:
-  #    - db
-  #  restart: on-failure
-  #  build: server
-  #  ports:
-  #    - 8081:8081
-  #  networks:
-  #    - easybus-network
+  server:
+    depends_on:
+      - db
+    #restart: on-failure
+    build: server
+    ports:
+      - 8081:8081
+    expose:
+      - 8081
+    networks:
+      - easybus-network
 
   db:
     image: mysql:latest
@@ -26,8 +27,8 @@ services:
       - 3306
     volumes:
       - my-db:/var/lib/mysql
-    #networks:
-    #  - easybus-network
+    networks:
+      - easybus-network
 
   #prometheus:
   #  image: prom/prometheus:latest
@@ -53,6 +54,5 @@ services:
 
 volumes:
   my-db:
-
-#networks:
-#  easybus-network:
+networks:
+  easybus-network:
