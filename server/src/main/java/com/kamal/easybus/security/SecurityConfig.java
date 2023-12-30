@@ -19,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -34,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationEntryPoint unauthorizedHandler){
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationEntryPoint unauthorizedHandler) {
         this.customUserDetailsService = customUserDetailsService;
         this.unauthorizedHandler = unauthorizedHandler;
     }
@@ -66,17 +65,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors()
-                    .and()
+                .and()
                 .csrf()
-                    .disable()
+                .disable()
                 .exceptionHandling()
-                    .authenticationEntryPoint(unauthorizedHandler)
-                    .and()
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                    .antMatchers("/",
+                .antMatchers("/",
                         "/favicon.ico",
                         "/**/*.png",
                         "/**/*.gif",
@@ -85,23 +84,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js")
-                        .permitAll()
-                .antMatchers("/api/v2/api-docs/**", "/swagger-ui/**","/api-docs/**")
-                        .permitAll()
-                .antMatchers("/api/v1/auth/**",  "/actuator/**")
-                        .permitAll()
+                .permitAll()
+                .antMatchers("/api/v2/api-docs/**", "/swagger-ui/**", "/api-docs/**")
+                .permitAll()
+                .antMatchers("/api/v1/auth/**", "/actuator/**")
+                .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/trips/**")
-                        .permitAll()
+                .permitAll()
+                .antMatchers("/api/v1/reserve/**")
+                .permitAll()
                 .antMatchers("/")
-                        .permitAll()
-                    /*.antMatchers(HttpMethod.POST, "/api/trips/**")
-                        .hasRole(RoleName.ROLE_ADMIN.name())
-                    .antMatchers(HttpMethod.PUT, "/api/trips/**")
-                        .hasRole(RoleName.ROLE_ADMIN.name())
-                    .antMatchers(HttpMethod.DELETE, "/api/trips/**")
-                        .hasRole(RoleName.ROLE_ADMIN.name())*/
-                    .anyRequest()
-                        .authenticated();
+                .permitAll()
+                /*.antMatchers(HttpMethod.POST, "/api/trips/**")
+                    .hasRole(RoleName.ROLE_ADMIN.name())
+                .antMatchers(HttpMethod.PUT, "/api/trips/**")
+                    .hasRole(RoleName.ROLE_ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, "/api/trips/**")
+                    .hasRole(RoleName.ROLE_ADMIN.name())*/
+                .anyRequest()
+                .authenticated();
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

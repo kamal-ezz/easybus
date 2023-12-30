@@ -9,6 +9,7 @@ import { DashboardTripsComponent } from './components/admin/dashboard-trips/dash
 import { DashboardBusesComponent } from './components/admin/dashboard-buses/dashboard-buses.component';
 import { DashboardReservationsComponent } from './components/admin/dashboard-reservations/dashboard-reservations.component';
 import { AddTripComponent } from './components/admin/add-trip/add-trip.component';
+import { ContactInfoComponent } from './components/contact-info/contact-info.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
     path: 'trips',
     component: TripsComponent,
   },
+  { path: 'contact-info', component: ContactInfoComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: NotFoundComponent },
 ];

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { City } from 'src/app/models/city.model';
 import { TripService } from 'src/app/services/trip.service';
@@ -10,13 +10,13 @@ import { TripService } from 'src/app/services/trip.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  tripInfo!: FormGroup;
+  tripInfo!: UntypedFormGroup;
   submitted: boolean = false;
   cities: City[] = [];
   todayDate = new Date().toJSON().slice(0, 10);
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private tripService: TripService
   ) {}

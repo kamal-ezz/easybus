@@ -22,3 +22,33 @@
     display: none;
   }
 }
+
+.seatstable {
+}
+
+.seat-form {
+  width: max-content;
+}
+
+.seatCheckbox {
+  /*margin-left: 20px;*/
+  padding: 5px;
+}
+.seatCheckbox input[type="checkbox"] {
+  display: none;
+}
+
+.seatCheckbox span:before {
+  width: 1em;
+  height: 1em;
+  content: url("../../../assets/car-seat.svg");
+  margin-right: 0.3em;
+}
+
+.seatCheckbox input[type="checkbox"]:checked ~ span:before {
+  content: url("../../../assets/car-seat-filled.svg");
+}
+
+.seatCheckbox input[type="checkbox"]:disabled ~ span:before {
+  content: url("../../../assets/car-seat-disabled.svg");
+}

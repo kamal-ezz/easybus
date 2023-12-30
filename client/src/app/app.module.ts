@@ -13,7 +13,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ChooseSeatComponent } from './components/choose-seat/choose-seat.component';
 import { ContactInfoComponent } from './components/contact-info/contact-info.component';
 import { ReservationSummaryComponent } from './components/reservation-summary/reservation-summary.component';
 import { TicketComponent } from './components/ticket/ticket.component';
@@ -25,6 +24,7 @@ import { AdminHomeComponent } from './components/admin/admin-home/admin-home.com
 import { DashboardTripsComponent } from './components/admin/dashboard-trips/dashboard-trips.component';
 import { DashboardBusesComponent } from './components/admin/dashboard-buses/dashboard-buses.component';
 import { DashboardReservationsComponent } from './components/admin/dashboard-reservations/dashboard-reservations.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,6 @@ import { DashboardReservationsComponent } from './components/admin/dashboard-res
     HomeComponent,
     NotFoundComponent,
     FooterComponent,
-    ChooseSeatComponent,
     ContactInfoComponent,
     ReservationSummaryComponent,
     TicketComponent,
@@ -56,6 +55,7 @@ import { DashboardReservationsComponent } from './components/admin/dashboard-res
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

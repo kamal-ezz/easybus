@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import {
+  UntypedFormArray,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Trip } from 'src/app/models/trip.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { TripService } from 'src/app/services/trip.service';
@@ -14,7 +19,7 @@ export class TripComponent implements OnInit {
   @Input()
   trip!: Trip;
   seatStatus: boolean[] = new Array(36).fill(false);
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   selectedSeats: number[] = [];
   submitted: boolean = false;
   isLoggedIn: boolean = false;
@@ -24,7 +29,8 @@ export class TripComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private tripService: TripService,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -33,8 +39,8 @@ export class TripComponent implements OnInit {
       this.tripId = this.route.snapshot.paramMap.get('id');
     }*/
 
-    this.form = new FormGroup({
-      seats: new FormArray([]),
+    this.form = new UntypedFormGroup({
+      seats: new UntypedFormArray([]),
     });
 
     this.tripService.getTripById(this.trip.id).subscribe({
@@ -45,7 +51,7 @@ export class TripComponent implements OnInit {
     });
 
     this.seatStatus.forEach(() => {
-      this.seats.push(new FormControl(false));
+      this.seats.push(new UntypedFormControl(false));
     });
 
     if (this.seats) {
@@ -65,15 +71,28 @@ export class TripComponent implements OnInit {
   }*/
 
   get seats() {
-    return this.form.get('seats') as FormArray;
+    return this.form.get('seats') as UntypedFormArray;
   }
 
   submit() {
     console.log(this.form);
     this.submitted = true;
-    if (this.selectedSeats.length) {
-      let price: number = this.trip.price * this.selectedSeats.length;
-      this.router.navigate(['passengerInfo']);
-    } else return;
+
+    if (this.selectedSeats.length === 0) {
+      return; // Don't proceed if no seats are selected
+    }
+
+    const totalPrice = this.trip.price * this.selectedSeats.length;
+    this.modalService.dismissAll();
+    this.router.navigate(['contact-info'], {
+      queryParams: { totalPrice: totalPrice },
+    });
+  }
+
+  openModal(content: any) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+    });
   }
 }
