@@ -7,17 +7,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EasybusApplication implements CommandLineRunner {
+public class Application implements CommandLineRunner {
 
 	private final Seeder seeder;
 
 	@Autowired
-	public EasybusApplication(Seeder seeder) {
+	public Application(Seeder seeder) {
 		this.seeder = seeder;
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(EasybusApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 

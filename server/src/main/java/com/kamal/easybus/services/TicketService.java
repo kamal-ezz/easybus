@@ -19,30 +19,30 @@ import java.io.IOException;
 public class TicketService {
     public Resource generateTicket(TicketData ticketData) throws IOException, DocumentException {
         String htmlContent = String.format("""
-               <html lang="en">
-                <body>
-                    <h1>Your E-Ticket</h1>
-                    <div>
-                        Last Name : <strong>%s</strong>
-                    </div>
-                    <div>
-                        First Name : <strong>%s</strong>
-                    </div>
-                    <div>
-                        Amount : <strong>%s</strong>
-                    </div>
-                    <div>
-                        Departure City : <strong>%s</strong>
-                    </div>
-                    <div>
-                        Arrival City : <strong>%s</strong>
-                    </div>
-                    <div>
-                        Seat Number : <strong>%s</strong>
-                    </div>
-                </body>
-               </html>
-                """, ticketData.getLastName(),
+                        <html lang="en">
+                         <body>
+                             <h1>Your E-Ticket</h1>
+                             <div>
+                                 Last Name : <strong>%s</strong>
+                             </div>
+                             <div>
+                                 First Name : <strong>%s</strong>
+                             </div>
+                             <div>
+                                 Amount : <strong>%s</strong>
+                             </div>
+                             <div>
+                                 Departure City : <strong>%s</strong>
+                             </div>
+                             <div>
+                                 Arrival City : <strong>%s</strong>
+                             </div>
+                             <div>
+                                 Seat Number : <strong>%s</strong>
+                             </div>
+                         </body>
+                        </html>
+                         """, ticketData.getLastName(),
                 ticketData.getFirstName(),
                 ticketData.getAmount(),
                 ticketData.getDeparture(),
