@@ -2,11 +2,11 @@
   <h2>Reservation Summary</h2>
   <div class="summary-item">
     <label>Name: </label>
-    <span>John Doe</span>
+    <span>{{ this.firstName + " " + this.lastName }}</span>
   </div>
   <div class="summary-item">
     <label>Email: </label>
-    <span>johndoe@example.com</span>
+    <span>{{ this.email }}</span>
   </div>
   <div class="summary-item">
     <label>Date: </label>
@@ -18,19 +18,19 @@
   </div>
   <div class="summary-item">
     <label>Seat Number:</label>
-    <span>3</span>
+    <span>{{ this.seats }}</span>
   </div>
   <div class="summary-item">
     <label>Departure City: </label>
-    <span></span>
+    <span>{{ this.departure }}</span>
   </div>
   <div class="summary-item">
     <label>Destination City: </label>
-    <span></span>
+    <span>{{ this.destination }} </span>
   </div>
   <div class="summary-item">
     <label>Price: </label>
-    <span></span>
+    <span>{{ this.price }}</span>
   </div>
   <div class="text-center">
     <button class="btn btn-primary" (click)="generateTicket()">

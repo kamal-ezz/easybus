@@ -16,22 +16,42 @@ export class ReservationSummaryComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  generateTicket() {
-    let departure = this.route.snapshot.paramMap.get('departure');
-    let destination = this.route.snapshot.paramMap.get('destination');
-    let price = this.route.snapshot.paramMap.get('totalPrice');
-    let seats = this.route.snapshot.paramMap.get('seats');
-    let firstName = this.route.snapshot.paramMap.get('firstName');
-    let lastName = this.route.snapshot.paramMap.get('lastName');
-    let email = this.route.snapshot.paramMap.get('email');
+  get departure() {
+    return this.route.snapshot.paramMap.get('departure');
+  }
 
+  get destination() {
+    return this.route.snapshot.paramMap.get('destination');
+  }
+
+  get price() {
+    return this.route.snapshot.paramMap.get('totalPrice');
+  }
+
+  get seats() {
+    return this.route.snapshot.paramMap.get('seats');
+  }
+
+  get firstName() {
+    return this.route.snapshot.paramMap.get('firstName');
+  }
+
+  get lastName() {
+    return this.route.snapshot.paramMap.get('lastName');
+  }
+
+  get email() {
+    return this.route.snapshot.paramMap.get('email');
+  }
+
+  generateTicket() {
     const ticketData: Ticket = {
-      lastName: lastName,
-      firstName: firstName,
-      price: price,
-      seatNumber: seats,
-      departure: departure,
-      destination: destination,
+      lastName: this.lastName,
+      firstName: this.firstName,
+      price: this.price,
+      seatNumber: this.seats,
+      departure: this.departure,
+      destination: this.destination,
     };
 
     this.tripService.generateTicket(ticketData).subscribe();
