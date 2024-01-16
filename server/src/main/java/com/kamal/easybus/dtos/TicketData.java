@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class TicketData {
     private String lastName;
     private String firstName;
-    private Double amount;
+    private Double price;
     private String departure;
     private String destination;
     private String seatNumber;

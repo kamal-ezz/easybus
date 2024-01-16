@@ -10,6 +10,7 @@ import { DashboardBusesComponent } from './components/admin/dashboard-buses/dash
 import { DashboardReservationsComponent } from './components/admin/dashboard-reservations/dashboard-reservations.component';
 import { AddTripComponent } from './components/admin/add-trip/add-trip.component';
 import { ContactInfoComponent } from './components/contact-info/contact-info.component';
+import { ReservationSummaryComponent } from './components/reservation-summary/reservation-summary.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
     component: TripsComponent,
   },
   { path: 'contact-info', component: ContactInfoComponent },
+  { path: 'reservation-summary', component: ReservationSummaryComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: NotFoundComponent },
 ];

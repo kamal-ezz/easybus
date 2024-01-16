@@ -63,9 +63,14 @@
     <div
       class="text-center text-lg-start mt-4 pt-2 d-flex align-items-center flex-column"
     >
-      <button type="submit" class="btn btn-primary px-3 py-2">
+      <a
+        routerLink="/reservation-summary"
+        [queryParams]="{ firstName, lastName, email }"
+        type="submit"
+        class="btn btn-primary px-3 py-2"
+      >
         Proceed to Checkout
-      </button>
+      </a>
     </div>
   </form>
 </div>

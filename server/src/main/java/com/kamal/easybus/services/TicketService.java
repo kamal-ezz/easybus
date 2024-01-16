@@ -4,13 +4,11 @@ import com.kamal.easybus.dtos.TicketData;
 import com.lowagie.text.DocumentException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 
 
@@ -44,7 +42,7 @@ public class TicketService {
                         </html>
                          """, ticketData.getLastName(),
                 ticketData.getFirstName(),
-                ticketData.getAmount(),
+                ticketData.getPrice(),
                 ticketData.getDeparture(),
                 ticketData.getDestination(),
                 ticketData.getSeatNumber());

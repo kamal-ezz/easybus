@@ -15,7 +15,6 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ContactInfoComponent } from './components/contact-info/contact-info.component';
 import { ReservationSummaryComponent } from './components/reservation-summary/reservation-summary.component';
-import { TicketComponent } from './components/ticket/ticket.component';
 import { AddTripComponent } from './components/admin/add-trip/add-trip.component';
 import { AddBusComponent } from './components/admin/add-bus/add-bus.component';
 import { ReservationsComponent } from './components/admin/reservations/reservations.component';
@@ -38,7 +37,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FooterComponent,
     ContactInfoComponent,
     ReservationSummaryComponent,
-    TicketComponent,
     AddTripComponent,
     AddBusComponent,
     ReservationsComponent,

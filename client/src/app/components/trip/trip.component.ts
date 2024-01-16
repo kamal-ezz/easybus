@@ -85,7 +85,12 @@ export class TripComponent implements OnInit {
     const totalPrice = this.trip.price * this.selectedSeats.length;
     this.modalService.dismissAll();
     this.router.navigate(['contact-info'], {
-      queryParams: { totalPrice: totalPrice },
+      queryParams: {
+        totalPrice: totalPrice,
+        departure: this.trip.departureCity,
+        destination: this.trip.destinationCity,
+        seats: '',
+      },
     });
   }
 
