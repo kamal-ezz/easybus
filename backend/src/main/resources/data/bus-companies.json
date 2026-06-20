@@ -1,0 +1,29 @@
+[
+  {
+    "company": "CTM",
+    "logo": "",
+    "equipments": [
+      "AIR_CONDITIONER",
+      "WIFI",
+      "USB_CHARGER"
+    ]
+  },
+  {
+    "company": "Supratours",
+    "logo": "",
+    "equipments": [
+      "AIR_CONDITIONER",
+      "TV",
+      "WIFI"
+    ]
+  },
+  {
+    "company": "SAT",
+    "logo": "",
+    "equipments": [
+      "AIR_CONDITIONER",
+      "LAMP",
+      "TV"
+    ]
+  }
+]

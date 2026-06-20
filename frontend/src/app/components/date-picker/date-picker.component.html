@@ -1,0 +1,98 @@
+<div #pickerRef class="relative">
+  <button
+    #triggerRef
+    type="button"
+    [disabled]="disabled()"
+    (click)="openCalendar()"
+    (blur)="onTouched()"
+    class="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-left text-gray-900 dark:text-white bg-white dark:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+  >
+    <span class="flex-1 truncate">{{ displayValue() || placeholder() }}</span>
+    <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <!-- Calendar icon (absolute left) -->
+  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+    <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  </div>
+
+  @if (open()) {
+    <div
+      #calendarPanel
+      class="z-50 min-w-[320px] bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-600 p-4"
+      [style.position]="'fixed'"
+      [style.left.px]="floatingPosition().x"
+      [style.top.px]="floatingPosition().y"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-4">
+        <button
+          type="button"
+          (click)="prevMonth()"
+          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors"
+          aria-label="Previous month"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <span class="font-semibold text-gray-900 dark:text-white">
+          {{ monthName }} {{ viewYear }}
+        </span>
+        <button
+          type="button"
+          (click)="nextMonth()"
+          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors"
+          aria-label="Next month"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Weekday headers -->
+      <div class="grid grid-cols-7 gap-1 mb-2">
+        @for (wd of weekDays; track wd) {
+          <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-1">{{ wd }}</div>
+        }
+      </div>
+
+      <!-- Days grid -->
+      <div class="grid grid-cols-7 gap-1">
+        @for (cell of cells(); track $index) {
+          @if (cell.date === null) {
+            <div class="aspect-square"></div>
+          } @else {
+            <button
+              type="button"
+              [disabled]="cell.isDisabled"
+              (click)="selectCell(cell)"
+              [attr.aria-label]="cell.date"
+              [attr.aria-selected]="cell.isSelected"
+              class="aspect-square rounded-lg text-sm transition-colors flex items-center justify-center
+                {{
+                  cell.isSelected
+                    ? 'bg-indigo-600 text-white font-medium'
+                    : cell.isToday
+                      ? 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 font-medium'
+                      : cell.isDisabled
+                        ? 'text-gray-300 dark:text-gray-600 cursor-not-allowed'
+                        : cell.isCurrentMonth
+                          ? 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+                          : 'text-gray-400 dark:text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                }}"
+            >
+              {{ cell.day }}
+            </button>
+          }
+        }
+      </div>
+    </div>
+  }
+</div>

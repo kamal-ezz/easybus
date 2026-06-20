@@ -1,0 +1,128 @@
+<div class="min-h-[calc(100vh-4rem)] bg-gray-50 dark:bg-gray-900">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Search summary card -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="font-semibold text-gray-900 dark:text-white">{{ fromCity() }}</span>
+          <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+          <span class="font-semibold text-gray-900 dark:text-white">{{ toCity() }}</span>
+          <span class="text-gray-500 dark:text-gray-400 text-sm">•</span>
+          <span class="text-gray-600 dark:text-gray-300">{{ formattedDate() }}</span>
+          <span class="text-gray-500 dark:text-gray-400 text-sm">•</span>
+          <span class="text-gray-600 dark:text-gray-300">{{ totalPassengers() }} {{ totalPassengers() === 1 ? 'passenger' : 'passengers' }}</span>
+        </div>
+        <button
+          type="button"
+          (click)="modifySearch()"
+          class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Modify search
+        </button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Available trips</h2>
+
+    @if (loading()) {
+      <div class="space-y-4">
+        @for (i of [1, 2, 3]; track i) {
+          <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 animate-pulse">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div class="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-16 mb-2"></div><div class="h-5 bg-gray-200 dark:bg-gray-700 rounded w-12"></div></div>
+                <div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-16 mb-2"></div><div class="h-5 bg-gray-200 dark:bg-gray-700 rounded w-12"></div></div>
+                <div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-16 mb-2"></div><div class="h-5 bg-gray-200 dark:bg-gray-700 rounded w-10"></div></div>
+                <div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-16 mb-2"></div><div class="h-5 bg-gray-200 dark:bg-gray-700 rounded w-20"></div></div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
+                <div class="h-10 bg-gray-200 dark:bg-gray-700 rounded-xl w-24"></div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else if (trips().length === 0) {
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow border border-gray-200 dark:border-gray-700 p-12 text-center">
+        <svg class="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <p class="text-gray-600 dark:text-gray-400 mb-2">No trips found for this search.</p>
+        <p class="text-sm text-gray-500 dark:text-gray-500 mb-6">Try changing your date or route.</p>
+        <button
+          type="button"
+          (click)="modifySearch()"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-colors"
+        >
+          Search again
+        </button>
+      </div>
+    } @else {
+      <ul class="space-y-4">
+        @for (trip of trips(); track trip.id) {
+          <li>
+            <div
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow border border-gray-200 dark:border-gray-700 p-6 hover:border-indigo-300 dark:hover:border-indigo-600 transition-colors"
+            >
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div class="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-4 items-center">
+                  <div>
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Departure</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ trip.departureTime }}</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Arrival</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ trip.arrivalTime }}</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Duration</p>
+                    <p class="text-gray-900 dark:text-white">{{ formatDuration(trip.durationMinutes) }}</p>
+                  </div>
+                  <div>
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Operator</p>
+                    <p class="font-medium text-gray-900 dark:text-white">{{ trip.operator }}</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ trip.availableSeats }} seats left</p>
+                  </div>
+                </div>
+                @if (trip.equipments.length > 0) {
+                  <div class="col-span-2 sm:col-span-4 flex flex-wrap gap-2 mt-1">
+                    @for (eq of trip.equipments; track eq) {
+                      @if (equipmentMeta[eq]) {
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" [title]="equipmentMeta[eq].label">
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="equipmentMeta[eq].icon" />
+                          </svg>
+                          {{ equipmentMeta[eq].label }}
+                        </span>
+                      }
+                    }
+                  </div>
+                }
+                <div class="flex items-center gap-4 sm:gap-6 border-t sm:border-t-0 pt-4 sm:pt-0 border-gray-100 dark:border-gray-700">
+                  <div class="text-right">
+                    <p class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{{ totalPrice(trip) }} <span class="text-sm font-normal text-gray-500 dark:text-gray-400">MAD</span></p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">total for {{ totalPassengers() }} {{ totalPassengers() === 1 ? 'passenger' : 'passengers' }}</p>
+                  </div>
+                  <button
+                    type="button"
+                    (click)="selectTrip(trip)"
+                    class="shrink-0 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow transition-all"
+                  >
+                    Select
+                  </button>
+                </div>
+              </div>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>

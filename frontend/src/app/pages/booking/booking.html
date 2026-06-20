@@ -1,0 +1,344 @@
+<div class="min-h-[calc(100vh-4rem)] bg-gray-50 dark:bg-gray-900">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    @if (paypalReturnMode() && paymentLoading()) {
+      <!-- Skeleton loading for PayPal return -->
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 animate-pulse">
+          <div class="flex flex-col items-center gap-4">
+            <div class="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div class="h-5 bg-gray-200 dark:bg-gray-700 rounded w-48"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-64"></div>
+          </div>
+        </div>
+      </div>
+    } @else if (paypalReturnMode() && paymentError()) {
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 text-center">
+        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Payment Failed</h2>
+        <p class="text-red-600 dark:text-red-400 mb-6">{{ paymentError() }}</p>
+        <button type="button" (click)="goHome()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors">Back to home</button>
+      </div>
+    } @else if (tripLoading()) {
+      <!-- Skeleton loading for trip fetch -->
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 animate-pulse">
+          <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-4"></div>
+          <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mb-3"></div>
+          <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 animate-pulse">
+          <div class="grid grid-cols-4 gap-2">
+            @for (i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]; track i) {
+              <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+            }
+          </div>
+        </div>
+      </div>
+    } @else if (!trip()) {
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 text-center">
+        <svg class="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h8m-8 4h8m-4 4v3m-6 0h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">No booking in progress. Select a trip to continue.</p>
+        <button type="button" (click)="goBack()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-colors">Search trips</button>
+      </div>
+    } @else if (confirmed()) {
+      <!-- STEP 4: Confirmation Ticket -->
+      <app-stepper [steps]="steps" [currentStep]="3" (stepClick)="goToStep($event)" />
+
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden print:shadow-none">
+        <!-- Ticket Header -->
+        <div class="bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-6 text-center text-white">
+          <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h1 class="text-2xl font-bold">Booking Confirmed</h1>
+          <p class="text-green-100 text-sm mt-1">Reference: {{ bookingReference() }}</p>
+        </div>
+
+        <!-- Ticket Body -->
+        <div class="p-6 space-y-4">
+          <!-- Route -->
+          <div class="flex items-center justify-center gap-4 py-4">
+            <div class="text-center">
+              <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">From</p>
+              <p class="text-lg font-bold text-gray-900 dark:text-white">{{ fromCityName() }}</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">{{ trip()!.departureTime }}</p>
+            </div>
+            <div class="flex flex-col items-center px-4">
+              <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+              <span class="text-xs text-gray-400 mt-1">{{ formatDuration(trip()!.durationMinutes) }}</span>
+            </div>
+            <div class="text-center">
+              <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">To</p>
+              <p class="text-lg font-bold text-gray-900 dark:text-white">{{ toCityName() }}</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">{{ trip()!.arrivalTime }}</p>
+            </div>
+          </div>
+
+          <!-- Dashed divider -->
+          <div class="border-t-2 border-dashed border-gray-200 dark:border-gray-700"></div>
+
+          <!-- Details grid -->
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <p class="text-gray-500 dark:text-gray-400">Date</p>
+              <p class="font-medium text-gray-900 dark:text-white">{{ formattedDate() }}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 dark:text-gray-400">Operator</p>
+              <p class="font-medium text-gray-900 dark:text-white">{{ trip()!.operator }}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 dark:text-gray-400">Seats</p>
+              <p class="font-medium text-gray-900 dark:text-white">{{ selectedSeats().join(', ') || 'N/A' }}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 dark:text-gray-400">Passengers</p>
+              <p class="font-medium text-gray-900 dark:text-white">{{ passengers() }}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 dark:text-gray-400">Passenger</p>
+              <p class="font-medium text-gray-900 dark:text-white">{{ contactName() }}</p>
+            </div>
+            <div>
+              <p class="text-gray-500 dark:text-gray-400">Total Paid</p>
+              <p class="font-bold text-indigo-600 dark:text-indigo-400">{{ totalPrice() }} MAD</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 flex gap-3 justify-center print:hidden">
+          <button type="button" (click)="printTicket()" class="inline-flex items-center gap-2 px-5 py-2.5 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            Print Ticket
+          </button>
+          <button type="button" (click)="goHome()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-colors">Back to Home</button>
+        </div>
+      </div>
+    } @else {
+      <!-- Booking Flow -->
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Complete your booking</h1>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">{{ fromCityName() }} to {{ toCityName() }} &middot; {{ formattedDate() }}</p>
+
+      <app-stepper [steps]="steps" [currentStep]="currentStep()" (stepClick)="goToStep($event)" />
+
+      @if (currentStep() === 0) {
+        <!-- STEP 1: Seat Selection -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Select your seats</h2>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{{ selectedSeats().length }}/{{ passengers() }} selected</span>
+          </div>
+
+          <!-- Bus-shaped seat map -->
+          <div class="max-w-xs mx-auto">
+            <!-- Steering wheel -->
+            <div class="flex justify-end mb-3 pr-1">
+              <div class="flex items-center gap-2 text-gray-400 dark:text-gray-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" stroke-width="1.5" />
+                  <circle cx="12" cy="12" r="3" stroke-width="1.5" />
+                  <path stroke-linecap="round" stroke-width="1.5" d="M12 3v6m0 6v6M3 12h6m6 0h6" />
+                </svg>
+                <span class="text-xs">Driver</span>
+              </div>
+            </div>
+
+            <!-- Door marker -->
+            <div class="flex justify-start mb-2">
+              <span class="text-xs text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">Door</span>
+            </div>
+
+            <!-- Seat grid -->
+            <div class="border-2 border-gray-200 dark:border-gray-700 rounded-xl p-3 bg-gray-50 dark:bg-gray-900/50">
+              <div class="flex flex-col gap-1.5">
+                @for (row of seatsByRow(); track row.row) {
+                  <div class="flex items-center gap-1">
+                    <span class="w-5 text-xs text-gray-400 dark:text-gray-500 text-right">{{ row.row }}</span>
+                    <!-- Left seats A B -->
+                    @for (s of row.seats.slice(0, 2); track s.id) {
+                      <button
+                        type="button"
+                        (click)="toggleSeat(s.id)"
+                        [disabled]="!s.available"
+                        [ngClass]="getSeatButtonClasses(s)"
+                        [attr.aria-label]="'Seat ' + s.id + (s.available ? (isSeatSelected(s.id) ? ', selected' : ', available') : ', occupied')"
+                        [attr.aria-pressed]="isSeatSelected(s.id)"
+                        [title]="s.id + (s.available ? '' : ' (occupied)')"
+                      >
+                        {{ s.id }}
+                      </button>
+                    }
+                    <!-- Aisle gap -->
+                    <div class="w-6"></div>
+                    <!-- Right seats C D -->
+                    @for (s of row.seats.slice(2, 4); track s.id) {
+                      <button
+                        type="button"
+                        (click)="toggleSeat(s.id)"
+                        [disabled]="!s.available"
+                        [ngClass]="getSeatButtonClasses(s)"
+                        [attr.aria-label]="'Seat ' + s.id + (s.available ? (isSeatSelected(s.id) ? ', selected' : ', available') : ', occupied')"
+                        [attr.aria-pressed]="isSeatSelected(s.id)"
+                        [title]="s.id + (s.available ? '' : ' (occupied)')"
+                      >
+                        {{ s.id }}
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="flex items-center justify-center gap-4 mt-4 text-xs text-gray-500 dark:text-gray-400">
+              <div class="flex items-center gap-1.5">
+                <div class="w-4 h-4 rounded border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700"></div>
+                Available
+              </div>
+              <div class="flex items-center gap-1.5">
+                <div class="w-4 h-4 rounded bg-indigo-600 border border-indigo-500"></div>
+                Selected
+              </div>
+              <div class="flex items-center gap-1.5">
+                <div class="w-4 h-4 rounded bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 opacity-50"></div>
+                Occupied
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 1 actions -->
+        <div class="flex justify-between">
+          <button type="button" (click)="goBack()" class="px-5 py-3 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Back to Trips</button>
+          <button type="button" (click)="nextStep()" [disabled]="!canConfirm()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow transition-all disabled:opacity-50 disabled:cursor-not-allowed">Next: Contact Details</button>
+        </div>
+      }
+
+      @if (currentStep() === 1) {
+        <!-- STEP 2: Contact Details -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Contact Details</h2>
+          <div class="space-y-4">
+            <div>
+              <label for="contactName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full name <span class="text-red-500">*</span></label>
+              <input
+                id="contactName" type="text"
+                [ngModel]="contactName()" (ngModelChange)="contactName.set($event)" name="contactName"
+                class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                [class]="contactAttempted() && !contactName().trim() ? 'border-red-400 dark:border-red-500' : 'border-gray-200 dark:border-gray-600'"
+                placeholder="Your name"
+              />
+              @if (contactAttempted() && !contactName().trim()) {
+                <p class="text-red-500 text-xs mt-1">Full name is required</p>
+              }
+            </div>
+            <div>
+              <label for="contactEmail" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email <span class="text-red-500">*</span></label>
+              <input
+                id="contactEmail" type="email"
+                [ngModel]="contactEmail()" (ngModelChange)="contactEmail.set($event)" name="contactEmail"
+                class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                [class]="contactAttempted() && !isContactValid() && contactEmail() ? 'border-red-400 dark:border-red-500' : contactAttempted() && !contactEmail().trim() ? 'border-red-400 dark:border-red-500' : 'border-gray-200 dark:border-gray-600'"
+                placeholder="you@example.com"
+              />
+              @if (contactAttempted() && !contactEmail().trim()) {
+                <p class="text-red-500 text-xs mt-1">Email is required</p>
+              } @else if (contactAttempted() && contactEmail().trim() && !isContactValid()) {
+                <p class="text-red-500 text-xs mt-1">Please enter a valid email address</p>
+              }
+            </div>
+            <div>
+              <label for="contactPhone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone</label>
+              <input
+                id="contactPhone" type="tel"
+                [ngModel]="contactPhone()" (ngModelChange)="contactPhone.set($event)" name="contactPhone"
+                class="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                placeholder="+212 6XX XXX XXX"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 actions -->
+        <div class="flex justify-between">
+          <button type="button" (click)="prevStep()" class="px-5 py-3 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Back</button>
+          <button type="button" (click)="nextStep()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow transition-all">Next: Payment</button>
+        </div>
+      }
+
+      @if (currentStep() === 2) {
+        <!-- STEP 3: Payment -->
+        <!-- Order summary -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Order Summary</h2>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-400">Route</span>
+              <span class="font-medium text-gray-900 dark:text-white">{{ fromCityName() }} → {{ toCityName() }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-400">Date</span>
+              <span class="font-medium text-gray-900 dark:text-white">{{ formattedDate() }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-400">Time</span>
+              <span class="font-medium text-gray-900 dark:text-white">{{ trip()!.departureTime }} – {{ trip()!.arrivalTime }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-400">Seats</span>
+              <span class="font-medium text-gray-900 dark:text-white">{{ selectedSeats().join(', ') }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-400">Passenger</span>
+              <span class="font-medium text-gray-900 dark:text-white">{{ contactName() }}</span>
+            </div>
+            <div class="border-t border-gray-200 dark:border-gray-700 pt-3 flex justify-between">
+              <span class="font-semibold text-gray-900 dark:text-white">Total</span>
+              <span class="text-xl font-bold text-indigo-600 dark:text-indigo-400">{{ totalPrice() }} MAD</span>
+            </div>
+          </div>
+        </div>
+
+        @if (paymentError()) {
+          <div class="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm">
+            {{ paymentError() }}
+          </div>
+        }
+        @if (paypalCancel()) {
+          <div class="mb-6 p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 text-sm">
+            Payment was cancelled. You can try again below.
+          </div>
+        }
+
+        <!-- Step 3 actions -->
+        <div class="flex justify-between">
+          <button type="button" (click)="prevStep()" [disabled]="paymentLoading()" class="px-5 py-3 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50">Back</button>
+          <button
+            type="button"
+            (click)="payWithPayPal()"
+            [disabled]="!canConfirm() || paymentLoading()"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-[#0070ba] hover:bg-[#005ea6] text-white font-semibold rounded-xl shadow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            @if (paymentLoading()) {
+              <span class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            }
+            Pay with PayPal
+          </button>
+        </div>
+      }
+    }
+  </div>
+</div>

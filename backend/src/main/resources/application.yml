@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/easybus}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    validate-on-migrate: false
+    locations: classpath:db/migration
+
+app:
+  jwtSecret: ${JWT_SECRET:ChangeMeToAProperlyLongJwtSigningSecretKeyForEasybusLocalDevelopmentOnly}
+  jwtExpirationInMs: ${JWT_EXPIRATION_IN_MS:604800000}
+  mock-mode: ${MOCK_MODE:true}
+  redirect-uri: ${REDIRECT_URI:http://localhost:8080/api/auth/google/callback}
+  frontend:
+    url: ${FRONTEND_URL:http://localhost:4200}
+  google:
+    clientId: ${GOOGLE_OAUTH_CLIENT_ID:}
+    clientSecret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+  cors:
+    allowed-origins:
+      - http://localhost:4200
+
+paypal:
+  clientId: ${PAYPAL_CLIENT_ID:}
+  clientSecret: ${PAYPAL_CLIENT_SECRET:}

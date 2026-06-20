@@ -1,0 +1,95 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+package-lock.json
+yarn.lock
+yarn-error.log
+npm-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build outputs
+dist/
+build/
+out-tsc/
+bazel-out/
+target/
+tmp/
+tmp/
+temp/
+.angular/
+.angular/cache/
+.sass-cache/
+
+
+# Environment files (generated, not committed)
+environment.ts
+environment.prod.ts
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Testing & coverage
+coverage/
+.nyc_output/
+testem.log
+connect.lock
+libpeerconnection.log
+__screenshots__/
+typings/
+
+# IDE & Editors
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.c9/
+.settings/
+.factorypath
+.apt_generated
+.springBeans
+.sts4-cache
+.history/
+*.launch
+*.sublime-workspace
+
+.vscode
+
+
+# AI Assistants / Agents
+.claude/
+.cursor/
+AGENTS.md
+
+# Logs
+logs/
+*.log
+log/
+
+# Java / Gradle
+.gradle/
+HELP.md
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+*.sql.backup
+pgdata/
+postgres-data/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
